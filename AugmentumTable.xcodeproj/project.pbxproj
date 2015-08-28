@@ -1,0 +1,488 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE6FE1601B8E8BD900111F41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6FE15F1B8E8BD900111F41 /* Images.xcassets */; };
+		CE6FE16F1B8E8BD900111F41 /* AugmentumTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE16E1B8E8BD900111F41 /* AugmentumTableTests.m */; };
+		CE6FE17F1B8E917500111F41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE17A1B8E917500111F41 /* AppDelegate.m */; };
+		CE6FE1811B8E917500111F41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE17E1B8E917500111F41 /* main.m */; };
+		CE6FE1841B8E919C00111F41 /* ATMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE1831B8E919C00111F41 /* ATMainViewController.m */; };
+		CE6FE18B1B8E9C2A00111F41 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE18A1B8E9C2A00111F41 /* UIColor+Hex.m */; };
+		CE6FE18F1B8EF36700111F41 /* ATLeftTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE18E1B8EF36700111F41 /* ATLeftTableViewCell.m */; };
+		CE6FE1911B8EF47800111F41 /* TableData.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE6FE1901B8EF47800111F41 /* TableData.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE6FE1691B8E8BD900111F41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE6FE1471B8E8BD900111F41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE6FE14E1B8E8BD900111F41;
+			remoteInfo = AugmentumTable;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CE6FE14F1B8E8BD900111F41 /* AugmentumTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AugmentumTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6FE15F1B8E8BD900111F41 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CE6FE1681B8E8BD900111F41 /* AugmentumTableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AugmentumTableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6FE16D1B8E8BD900111F41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE6FE16E1B8E8BD900111F41 /* AugmentumTableTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AugmentumTableTests.m; sourceTree = "<group>"; };
+		CE6FE1791B8E917500111F41 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CE6FE17A1B8E917500111F41 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CE6FE17D1B8E917500111F41 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE6FE17E1B8E917500111F41 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CE6FE1821B8E919C00111F41 /* ATMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMainViewController.h; sourceTree = "<group>"; };
+		CE6FE1831B8E919C00111F41 /* ATMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMainViewController.m; sourceTree = "<group>"; };
+		CE6FE1851B8E972F00111F41 /* AugmentumTable_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AugmentumTable_Prefix.pch; sourceTree = "<group>"; };
+		CE6FE1871B8E98AF00111F41 /* ATFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ATFoundation.h; sourceTree = "<group>"; };
+		CE6FE1891B8E9C2A00111F41 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		CE6FE18A1B8E9C2A00111F41 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		CE6FE18D1B8EF36700111F41 /* ATLeftTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATLeftTableViewCell.h; sourceTree = "<group>"; };
+		CE6FE18E1B8EF36700111F41 /* ATLeftTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATLeftTableViewCell.m; sourceTree = "<group>"; };
+		CE6FE1901B8EF47800111F41 /* TableData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableData.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CE6FE14C1B8E8BD900111F41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6FE1651B8E8BD900111F41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CE6FE1461B8E8BD900111F41 = {
+			isa = PBXGroup;
+			children = (
+				CE6FE1511B8E8BD900111F41 /* AugmentumTable */,
+				CE6FE16B1B8E8BD900111F41 /* AugmentumTableTests */,
+				CE6FE1501B8E8BD900111F41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CE6FE1501B8E8BD900111F41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE14F1B8E8BD900111F41 /* AugmentumTable.app */,
+				CE6FE1681B8E8BD900111F41 /* AugmentumTableTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE6FE1511B8E8BD900111F41 /* AugmentumTable */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE1781B8E917500111F41 /* Classes */,
+				CE6FE17C1B8E917500111F41 /* Supporting Files */,
+				CE6FE15F1B8E8BD900111F41 /* Images.xcassets */,
+			);
+			path = AugmentumTable;
+			sourceTree = "<group>";
+		};
+		CE6FE16B1B8E8BD900111F41 /* AugmentumTableTests */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE16E1B8E8BD900111F41 /* AugmentumTableTests.m */,
+				CE6FE16C1B8E8BD900111F41 /* Supporting Files */,
+			);
+			path = AugmentumTableTests;
+			sourceTree = "<group>";
+		};
+		CE6FE16C1B8E8BD900111F41 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE16D1B8E8BD900111F41 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE6FE1781B8E917500111F41 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE18C1B8EF34100111F41 /* Components */,
+				CE6FE1881B8E99F500111F41 /* Categories */,
+				CE6FE1861B8E989200111F41 /* Globals */,
+				CE6FE1791B8E917500111F41 /* AppDelegate.h */,
+				CE6FE17A1B8E917500111F41 /* AppDelegate.m */,
+				CE6FE17B1B8E917500111F41 /* Controllers */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		CE6FE17B1B8E917500111F41 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE1821B8E919C00111F41 /* ATMainViewController.h */,
+				CE6FE1831B8E919C00111F41 /* ATMainViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE6FE17C1B8E917500111F41 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE17D1B8E917500111F41 /* Info.plist */,
+				CE6FE17E1B8E917500111F41 /* main.m */,
+				CE6FE1851B8E972F00111F41 /* AugmentumTable_Prefix.pch */,
+				CE6FE1901B8EF47800111F41 /* TableData.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE6FE1861B8E989200111F41 /* Globals */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE1871B8E98AF00111F41 /* ATFoundation.h */,
+			);
+			path = Globals;
+			sourceTree = "<group>";
+		};
+		CE6FE1881B8E99F500111F41 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE1891B8E9C2A00111F41 /* UIColor+Hex.h */,
+				CE6FE18A1B8E9C2A00111F41 /* UIColor+Hex.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		CE6FE18C1B8EF34100111F41 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CE6FE18D1B8EF36700111F41 /* ATLeftTableViewCell.h */,
+				CE6FE18E1B8EF36700111F41 /* ATLeftTableViewCell.m */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CE6FE14E1B8E8BD900111F41 /* AugmentumTable */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE6FE1721B8E8BD900111F41 /* Build configuration list for PBXNativeTarget "AugmentumTable" */;
+			buildPhases = (
+				CE6FE14B1B8E8BD900111F41 /* Sources */,
+				CE6FE14C1B8E8BD900111F41 /* Frameworks */,
+				CE6FE14D1B8E8BD900111F41 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AugmentumTable;
+			productName = AugmentumTable;
+			productReference = CE6FE14F1B8E8BD900111F41 /* AugmentumTable.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CE6FE1671B8E8BD900111F41 /* AugmentumTableTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE6FE1751B8E8BD900111F41 /* Build configuration list for PBXNativeTarget "AugmentumTableTests" */;
+			buildPhases = (
+				CE6FE1641B8E8BD900111F41 /* Sources */,
+				CE6FE1651B8E8BD900111F41 /* Frameworks */,
+				CE6FE1661B8E8BD900111F41 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE6FE16A1B8E8BD900111F41 /* PBXTargetDependency */,
+			);
+			name = AugmentumTableTests;
+			productName = AugmentumTableTests;
+			productReference = CE6FE1681B8E8BD900111F41 /* AugmentumTableTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CE6FE1471B8E8BD900111F41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = xu01;
+				TargetAttributes = {
+					CE6FE14E1B8E8BD900111F41 = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 99834UY9GW;
+					};
+					CE6FE1671B8E8BD900111F41 = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 99834UY9GW;
+						TestTargetID = CE6FE14E1B8E8BD900111F41;
+					};
+				};
+			};
+			buildConfigurationList = CE6FE14A1B8E8BD900111F41 /* Build configuration list for PBXProject "AugmentumTable" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CE6FE1461B8E8BD900111F41;
+			productRefGroup = CE6FE1501B8E8BD900111F41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CE6FE14E1B8E8BD900111F41 /* AugmentumTable */,
+				CE6FE1671B8E8BD900111F41 /* AugmentumTableTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CE6FE14D1B8E8BD900111F41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6FE1601B8E8BD900111F41 /* Images.xcassets in Resources */,
+				CE6FE1911B8EF47800111F41 /* TableData.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6FE1661B8E8BD900111F41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CE6FE14B1B8E8BD900111F41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6FE1811B8E917500111F41 /* main.m in Sources */,
+				CE6FE18F1B8EF36700111F41 /* ATLeftTableViewCell.m in Sources */,
+				CE6FE18B1B8E9C2A00111F41 /* UIColor+Hex.m in Sources */,
+				CE6FE1841B8E919C00111F41 /* ATMainViewController.m in Sources */,
+				CE6FE17F1B8E917500111F41 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6FE1641B8E8BD900111F41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6FE16F1B8E8BD900111F41 /* AugmentumTableTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CE6FE16A1B8E8BD900111F41 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE6FE14E1B8E8BD900111F41 /* AugmentumTable */;
+			targetProxy = CE6FE1691B8E8BD900111F41 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CE6FE1701B8E8BD900111F41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		CE6FE1711B8E8BD900111F41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CE6FE1731B8E8BD900111F41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: lingyi xu (JGTF3S2CQL)";
+				GCC_PREFIX_HEADER = "AugmentumTable/Supporting Files/AugmentumTable_Prefix.pch";
+				INFOPLIST_FILE = "AugmentumTable/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		CE6FE1741B8E8BD900111F41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: lingyi xu (JGTF3S2CQL)";
+				GCC_PREFIX_HEADER = "AugmentumTable/Supporting Files/AugmentumTable_Prefix.pch";
+				INFOPLIST_FILE = "AugmentumTable/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		CE6FE1761B8E8BD900111F41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AugmentumTableTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AugmentumTable.app/AugmentumTable";
+			};
+			name = Debug;
+		};
+		CE6FE1771B8E8BD900111F41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AugmentumTableTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AugmentumTable.app/AugmentumTable";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CE6FE14A1B8E8BD900111F41 /* Build configuration list for PBXProject "AugmentumTable" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE6FE1701B8E8BD900111F41 /* Debug */,
+				CE6FE1711B8E8BD900111F41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE6FE1721B8E8BD900111F41 /* Build configuration list for PBXNativeTarget "AugmentumTable" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE6FE1731B8E8BD900111F41 /* Debug */,
+				CE6FE1741B8E8BD900111F41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE6FE1751B8E8BD900111F41 /* Build configuration list for PBXNativeTarget "AugmentumTableTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE6FE1761B8E8BD900111F41 /* Debug */,
+				CE6FE1771B8E8BD900111F41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CE6FE1471B8E8BD900111F41 /* Project object */;
+}
