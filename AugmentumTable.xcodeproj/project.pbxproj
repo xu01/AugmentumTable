@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C7A673171B917BD5008D03FD /* ATGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A673161B917BD5008D03FD /* ATGridView.m */; };
+		C7A6731A1B918BFC008D03FD /* ATDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A673191B918BFC008D03FD /* ATDragView.m */; };
 		CE6FE1601B8E8BD900111F41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6FE15F1B8E8BD900111F41 /* Images.xcassets */; };
 		CE6FE16F1B8E8BD900111F41 /* AugmentumTableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE16E1B8E8BD900111F41 /* AugmentumTableTests.m */; };
 		CE6FE17F1B8E917500111F41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FE17A1B8E917500111F41 /* AppDelegate.m */; };
@@ -28,6 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C7A673151B917BD5008D03FD /* ATGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATGridView.h; sourceTree = "<group>"; };
+		C7A673161B917BD5008D03FD /* ATGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATGridView.m; sourceTree = "<group>"; };
+		C7A673181B918BFC008D03FD /* ATDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATDragView.h; sourceTree = "<group>"; };
+		C7A673191B918BFC008D03FD /* ATDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATDragView.m; sourceTree = "<group>"; };
 		CE6FE14F1B8E8BD900111F41 /* AugmentumTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AugmentumTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6FE15F1B8E8BD900111F41 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CE6FE1681B8E8BD900111F41 /* AugmentumTableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AugmentumTableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +72,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C7A673141B917BC1008D03FD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C7A673151B917BD5008D03FD /* ATGridView.h */,
+				C7A673161B917BD5008D03FD /* ATGridView.m */,
+				C7A673181B918BFC008D03FD /* ATDragView.h */,
+				C7A673191B918BFC008D03FD /* ATDragView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		CE6FE1461B8E8BD900111F41 = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +131,7 @@
 		CE6FE1781B8E917500111F41 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C7A673141B917BC1008D03FD /* Views */,
 				CE6FE18C1B8EF34100111F41 /* Components */,
 				CE6FE1881B8E99F500111F41 /* Categories */,
 				CE6FE1861B8E989200111F41 /* Globals */,
@@ -272,8 +290,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE6FE1811B8E917500111F41 /* main.m in Sources */,
+				C7A673171B917BD5008D03FD /* ATGridView.m in Sources */,
 				CE6FE18F1B8EF36700111F41 /* ATLeftTableViewCell.m in Sources */,
 				CE6FE18B1B8E9C2A00111F41 /* UIColor+Hex.m in Sources */,
+				C7A6731A1B918BFC008D03FD /* ATDragView.m in Sources */,
 				CE6FE1841B8E919C00111F41 /* ATMainViewController.m in Sources */,
 				CE6FE17F1B8E917500111F41 /* AppDelegate.m in Sources */,
 			);

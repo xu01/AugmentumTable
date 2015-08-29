@@ -2,7 +2,7 @@
 //  ATLeftTableViewCell.m
 //  AugmentumTable
 //
-//  Created by user on 8/27/15.
+//  Created by xu lingyi on 8/27/15.
 //  Copyright (c) 2015 xu01. All rights reserved.
 //
 
@@ -41,11 +41,20 @@
         UIView *itemView = [[UIView alloc] init];
         if (i%2==0) {
             itemView.frame = CGRectMake(0.0, 40.0+135*(i/2), kLeftViewWidth/2, 135);
-            itemView.backgroundColor = [UIColor redColor];
         } else {
             itemView.frame = CGRectMake(kLeftViewWidth/2, 40.0+135*(i/2), 145, 135);
-            itemView.backgroundColor = [UIColor blueColor];
         }
+        UIImageView *tableImage = [[UIImageView alloc] initWithFrame:CGRectMake(7.5, 0.0, 110, 110)];
+        tableImage.contentMode = UIViewContentModeCenter;
+        tableImage.image = [UIImage imageNamed:_tableItems[i][@"image_default"]];
+        [itemView addSubview:tableImage];
+        
+        UILabel *tableName = [[UILabel alloc] initWithFrame:CGRectMake(7.5, 110, 110, 25)];
+        tableName.text = _tableItems[i][@"name"];
+        tableName.textAlignment = NSTextAlignmentCenter;
+        tableName.font = [UIFont systemFontOfSize:15.0];
+        [itemView addSubview:tableName];
+        
         [self addSubview:itemView];
     }
 }

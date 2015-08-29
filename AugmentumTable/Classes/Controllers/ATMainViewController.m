@@ -3,11 +3,12 @@
 //  AugmentumTable
 //
 //  Created by user on 8/27/15.
-//  Copyright (c) 2015 xu01. All rights reserved.
+//  Copyright (c) 2015 xu lingyi. All rights reserved.
 //
 
 #import "ATMainViewController.h"
 #import "ATLeftTableViewCell.h"
+#import "ATGridView.h"
 
 @interface ATMainViewController ()
 {
@@ -20,7 +21,7 @@
     UIView          *_rightView;
     UILabel         *_rightTitle;
     UIScrollView    *_rightScrollView;
-    UIView          *_rightCanvas;
+    ATGridView      *_rightCanvas;
 }
 
 @end
@@ -91,6 +92,18 @@
     _rightTitle.textColor = [UIColor whiteColor];
     _rightTitle.textAlignment = NSTextAlignmentCenter;
     [_rightView addSubview:_rightTitle];
+    
+    _rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, kSubTitleHeight, kRightViewWidth, _rightView.frame.size.height-kSubTitleHeight)];
+    _rightScrollView.scrollEnabled = YES;
+    _rightScrollView.bounces = NO;
+    _rightScrollView.minimumZoomScale = 0.5;
+    _rightScrollView.maximumZoomScale = 3.0;
+    _rightScrollView.delegate = self;
+    _rightScrollView.contentSize = CGSizeMake(kGridRows*kGridWidth, kGridColumns*kGridWidth);
+    [_rightView addSubview:_rightScrollView];
+    
+    _rightCanvas = [[ATGridView alloc] initWithFrame:CGRectMake(0.0, 0.0, kGridRows*kGridWidth, kGridColumns*kGridWidth)];
+    [_rightScrollView addSubview:_rightCanvas];
 }
 
 #pragma mark - UITableViewDataSource
@@ -104,15 +117,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"_LeftTableViewCell";
-    ATLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(!cell){
+    //ATLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ATLeftTableViewCell *cell = (ATLeftTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if(cell == nil){
         cell = [[ATLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.tableItems = _tableData[indexPath.row][@"items"];
+        cell.tableType.text = _tableData[indexPath.row][@"name"];
+        [cell buildTables];
     }
-    cell.tableType.text = _tableData[indexPath.row][@"name"];
-    //[cell buildTables];
-    
+
     return cell;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return _rightCanvas;
 }
 
 @end

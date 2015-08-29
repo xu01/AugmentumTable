@@ -11,7 +11,7 @@
 				<key>name</key>
 				<string>单人吧台</string>
 				<key>image_default</key>
-				<string>table_def_1_1.png</string>
+				<string>table_def_1_1</string>
 			</dict>
 		</array>
 	</dict>
@@ -24,13 +24,13 @@
 				<key>name</key>
 				<string>双人桌</string>
 				<key>image_default</key>
-				<string>table_def_2_1.png</string>
+				<string>table_def_2_1</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>双人圆桌</string>
 				<key>image_default</key>
-				<string>table_def_2_2.png</string>
+				<string>table_def_2_2</string>
 			</dict>
 		</array>
 	</dict>
@@ -43,19 +43,19 @@
 				<key>name</key>
 				<string>四人桌</string>
 				<key>image_default</key>
-				<string>table_def_4_1.png</string>
+				<string>table_def_4_1</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>四人方桌</string>
 				<key>image_default</key>
-				<string>table_def_4_2.png</string>
+				<string>table_def_4_2</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>四人圆桌</string>
 				<key>image_default</key>
-				<string>table_def_4_3.png</string>
+				<string>table_def_4_3</string>
 			</dict>
 		</array>
 	</dict>
@@ -68,7 +68,7 @@
 				<key>name</key>
 				<string>六人桌</string>
 				<key>image_default</key>
-				<string>table_def_6_1.png</string>
+				<string>table_def_6_1</string>
 			</dict>
 		</array>
 	</dict>
@@ -81,13 +81,13 @@
 				<key>name</key>
 				<string>八人方桌</string>
 				<key>image_default</key>
-				<string>table_def_8_1.png</string>
+				<string>table_def_8_1</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>八人长桌</string>
 				<key>image_default</key>
-				<string>table_def_8_2.png</string>
+				<string>table_def_8_2</string>
 			</dict>
 		</array>
 	</dict>
@@ -100,7 +100,7 @@
 				<key>name</key>
 				<string>十人桌</string>
 				<key>image_default</key>
-				<string>table_def_10_1.png</string>
+				<string>table_def_10_1</string>
 			</dict>
 		</array>
 	</dict>
@@ -113,7 +113,7 @@
 				<key>name</key>
 				<string>十二人桌</string>
 				<key>image_default</key>
-				<string>table_def_12_1.png</string>
+				<string>table_def_12_1</string>
 			</dict>
 		</array>
 	</dict>
