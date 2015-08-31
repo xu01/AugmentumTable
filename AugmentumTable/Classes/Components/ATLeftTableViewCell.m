@@ -9,6 +9,9 @@
 #import "ATLeftTableViewCell.h"
 
 @implementation ATLeftTableViewCell
+{
+    CGPoint _startCenter;
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -36,7 +39,7 @@
     return self;
 }
 
-- (void)buildTables {
+- (void)buildTablesWithParent:(id)parent {
     for (int i=0; i<_tableItems.count; i++) {
         UIView *itemView = [[UIView alloc] init];
         if (i%2==0) {
@@ -44,10 +47,16 @@
         } else {
             itemView.frame = CGRectMake(kLeftViewWidth/2, 40.0+135*(i/2), 145, 135);
         }
-        UIImageView *tableImage = [[UIImageView alloc] initWithFrame:CGRectMake(7.5, 0.0, 110, 110)];
-        tableImage.contentMode = UIViewContentModeCenter;
+        
+        UIView *dragView = [[UIView alloc] initWithFrame:CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
+        [itemView addSubview:dragView];
+        BFDragGestureRecognizer *dragRecognizer = [[BFDragGestureRecognizer alloc] init];
+        [dragRecognizer addTarget:self action:@selector(dragRecognized:)];
+        [dragView addGestureRecognizer:dragRecognizer];
+        UIImageView *tableImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
+        tableImage.contentMode = UIViewContentModeScaleAspectFit;
         tableImage.image = [UIImage imageNamed:_tableItems[i][@"image_default"]];
-        [itemView addSubview:tableImage];
+        [dragView addSubview:tableImage];
         
         UILabel *tableName = [[UILabel alloc] initWithFrame:CGRectMake(7.5, 110, 110, 25)];
         tableName.text = _tableItems[i][@"name"];
@@ -56,6 +65,24 @@
         [itemView addSubview:tableName];
         
         [self addSubview:itemView];
+    }
+}
+
+- (void)dragRecognized:(BFDragGestureRecognizer *)recognizer {
+    UIView *view = recognizer.view;
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        // When the gesture starts, remember the current position.
+        NSData *tempArchive = [NSKeyedArchiver archivedDataWithRootObject:view];
+        [view.superview addSubview:[NSKeyedUnarchiver unarchiveObjectWithData:tempArchive]];
+        view.layer.borderColor = [[UIColor redColor] CGColor];
+        view.layer.borderWidth = 1.0;
+        _startCenter = view.center;
+    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        // During the gesture, we just add the gesture's translation to the saved original position.
+        // The translation will account for the changes in contentOffset caused by auto-scrolling.
+        CGPoint translation = [recognizer translationInView:self];
+        CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
+        view.center = center;
     }
 }
 

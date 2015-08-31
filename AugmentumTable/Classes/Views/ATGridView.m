@@ -30,11 +30,11 @@
     
     UIBezierPath *drawingPath = [UIBezierPath bezierPath];
     
-    for( i = 0 ; i <= width ; i=i+20 ) {
+    for( i = 0 ; i <= width ; i=i+kGridWidth ) {
         [drawingPath moveToPoint:CGPointMake(i, 0)];
         [drawingPath addLineToPoint:CGPointMake(i, height)];
     } // the horizontal lines
-    for( i = 0 ; i <= height ; i=i+20 ) {
+    for( i = 0 ; i <= height ; i=i+kGridWidth ) {
         [drawingPath moveToPoint:CGPointMake(0,i)];
         [drawingPath addLineToPoint:CGPointMake(width, i)];
     } // actually draw the grid

@@ -12,6 +12,10 @@
 				<string>单人吧台</string>
 				<key>image_default</key>
 				<string>table_def_1_1</string>
+				<key>rows</key>
+				<integer>1</integer>
+				<key>cols</key>
+				<integer>1</integer>
 			</dict>
 		</array>
 	</dict>
@@ -25,12 +29,20 @@
 				<string>双人桌</string>
 				<key>image_default</key>
 				<string>table_def_2_1</string>
+				<key>rows</key>
+				<integer>1</integer>
+				<key>cols</key>
+				<integer>2</integer>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>双人圆桌</string>
 				<key>image_default</key>
 				<string>table_def_2_2</string>
+				<key>rows</key>
+				<integer>1</integer>
+				<key>cols</key>
+				<integer>1</integer>
 			</dict>
 		</array>
 	</dict>
@@ -44,18 +56,30 @@
 				<string>四人桌</string>
 				<key>image_default</key>
 				<string>table_def_4_1</string>
+				<key>rows</key>
+				<integer>2</integer>
+				<key>cols</key>
+				<integer>2</integer>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>四人方桌</string>
 				<key>image_default</key>
 				<string>table_def_4_2</string>
+				<key>rows</key>
+				<integer>2</integer>
+				<key>cols</key>
+				<integer>2</integer>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>四人圆桌</string>
 				<key>image_default</key>
 				<string>table_def_4_3</string>
+				<key>rows</key>
+				<integer>2</integer>
+				<key>cols</key>
+				<integer>2</integer>
 			</dict>
 		</array>
 	</dict>
@@ -69,6 +93,10 @@
 				<string>六人桌</string>
 				<key>image_default</key>
 				<string>table_def_6_1</string>
+				<key>rows</key>
+				<integer>3</integer>
+				<key>cols</key>
+				<integer>2</integer>
 			</dict>
 		</array>
 	</dict>
@@ -82,12 +110,20 @@
 				<string>八人方桌</string>
 				<key>image_default</key>
 				<string>table_def_8_1</string>
+				<key>rows</key>
+				<integer>3</integer>
+				<key>cols</key>
+				<integer>3</integer>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>八人长桌</string>
 				<key>image_default</key>
 				<string>table_def_8_2</string>
+				<key>rows</key>
+				<integer>4</integer>
+				<key>cols</key>
+				<integer>2</integer>
 			</dict>
 		</array>
 	</dict>
@@ -101,6 +137,10 @@
 				<string>十人桌</string>
 				<key>image_default</key>
 				<string>table_def_10_1</string>
+				<key>rows</key>
+				<integer>3</integer>
+				<key>cols</key>
+				<integer>3</integer>
 			</dict>
 		</array>
 	</dict>
@@ -114,6 +154,10 @@
 				<string>十二人桌</string>
 				<key>image_default</key>
 				<string>table_def_12_1</string>
+				<key>rows</key>
+				<integer>3</integer>
+				<key>cols</key>
+				<integer>3</integer>
 			</dict>
 		</array>
 	</dict>

@@ -106,6 +106,7 @@
     [_rightScrollView addSubview:_rightCanvas];
 }
 
+
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return (([_tableData[indexPath.row][@"items"] count]+1)/2)*135+40;
@@ -123,7 +124,7 @@
         cell = [[ATLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.tableItems = _tableData[indexPath.row][@"items"];
         cell.tableType.text = _tableData[indexPath.row][@"name"];
-        [cell buildTables];
+        [cell buildTablesWithParent:self];
     }
 
     return cell;

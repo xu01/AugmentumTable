@@ -1,0 +1,10 @@
+PODS:
+  - BFDragGestureRecognizer (1.1.0)
+
+DEPENDENCIES:
+  - BFDragGestureRecognizer
+
+SPEC CHECKSUMS:
+  BFDragGestureRecognizer: 12ad65373fe384c4ae61079f65125b8b468babcc
+
+COCOAPODS: 0.36.0

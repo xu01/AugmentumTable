@@ -9,5 +9,6 @@
 
 #import "ATFoundation.h"
 #import "UIColor+Hex.h"
+#import "BFDragGestureRecognizer.h"
 
 #endif

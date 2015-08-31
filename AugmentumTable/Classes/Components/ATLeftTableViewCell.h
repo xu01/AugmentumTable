@@ -13,6 +13,6 @@
 @property (strong, nonatomic) UILabel *tableType;
 @property (strong, nonatomic) NSMutableArray *tableItems;
 
-- (void)buildTables;
+- (void)buildTablesWithParent:(id)parent;
 
 @end
