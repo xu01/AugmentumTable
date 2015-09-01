@@ -14,5 +14,7 @@
 @property (strong, nonatomic) NSMutableArray *tableItems;
 
 - (void)buildTablesWithParent:(id)parent;
+- (UIView *)addDragView:(int)i;
 
 @end
+

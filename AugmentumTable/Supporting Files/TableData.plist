@@ -107,23 +107,23 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>八人方桌</string>
-				<key>image_default</key>
-				<string>table_def_8_1</string>
-				<key>rows</key>
-				<integer>3</integer>
-				<key>cols</key>
-				<integer>3</integer>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>八人长桌</string>
 				<key>image_default</key>
-				<string>table_def_8_2</string>
+				<string>table_def_8_1</string>
 				<key>rows</key>
 				<integer>4</integer>
 				<key>cols</key>
 				<integer>2</integer>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>八人方桌</string>
+				<key>image_default</key>
+				<string>table_def_8_2</string>
+				<key>rows</key>
+				<integer>3</integer>
+				<key>cols</key>
+				<integer>3</integer>
 			</dict>
 		</array>
 	</dict>
