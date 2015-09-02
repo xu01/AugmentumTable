@@ -34,6 +34,10 @@ CGRect CGRectFromValue(NSValue *value);
 
 @protocol ATDragViewDelegate <NSObject>
 
+/* 移动开始 */
+- (void)dragViewDidStartDragging:(ATDragView *)dragView;
+/* 移动之中 */
+- (void)dragViewDidMoveDragging:(ATDragView *)dragView;
 /* 移动结束 */
 - (void)dragViewDidEndDragging:(ATDragView *)dragView;
 

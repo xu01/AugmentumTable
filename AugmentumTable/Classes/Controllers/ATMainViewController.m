@@ -130,6 +130,24 @@
     return cell;
 }
 
+#pragma mark - ATDragViewDelegate
+- (void)dragViewDidStartDragging:(ATDragView *)dragView {
+    
+}
+
+- (void)dragViewDidMoveDragging:(ATDragView *)dragView {
+    
+}
+
+- (void)dragViewDidEndDragging:(ATDragView *)dragView {
+    [_rightCanvas addSubview:dragView];
+    CGPoint center = CGPointMake(dragView.center.x-kLeftViewWidth, dragView.center.y-kNavigationHeight-kSubTitleHeight);
+    
+    //CGPoint origin = [self.view convertPoint:dragView.frame.origin toView:_rightCanvas];
+    //NSLog(@"x:%f - y:%f", center.x, center.y);
+    dragView.center = center;
+}
+
 #pragma mark - UIScrollViewDelegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return _rightCanvas;

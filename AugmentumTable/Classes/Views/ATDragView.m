@@ -7,6 +7,7 @@
 //
 
 #import "ATDragView.h"
+#import "ATMainViewController.h"
 
 NSValue *CGRectValue(CGRect rect){
     return [NSValue valueWithCGRect:rect];
@@ -18,6 +19,7 @@ CGRect CGRectFromValue(NSValue *value){
 @implementation ATDragView
 {
     CGPoint         _startCenter;
+    NSInteger       _currentGoodFrameIndex;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -32,6 +34,7 @@ CGRect CGRectFromValue(NSValue *value){
         _tableInfo = [NSDictionary dictionaryWithDictionary:tableInfo];
         _cell = cell;
         _allowFramesArray = [NSArray arrayWithArray:allowFramesArray];
+        _delegate = delegate;
         
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         [_imageView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
@@ -55,15 +58,15 @@ CGRect CGRectFromValue(NSValue *value){
 
 - (void)dragRecognized:(BFDragGestureRecognizer *)recognizer {
     UIView *view = recognizer.view;
-    UIView *rootView = [UIApplication sharedApplication].delegate.window.rootViewController.view;
+    ATMainViewController *root = (ATMainViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         // When the gesture starts, remember the current position.
         if ([view.superview.superview isKindOfClass:[ATLeftTableViewCell class]]) {
-            [view.superview insertSubview:[_cell addDragView:(view.tag-1000)] belowSubview:view];
+            [view.superview insertSubview:[_cell addDragView:(view.tag-1000) withDelegate:_delegate] belowSubview:view];
         }
         
-        [rootView addSubview:view];
-        CGPoint center = [recognizer locationInView:rootView];
+        [root.view addSubview:view];
+        CGPoint center = [recognizer locationInView:root.view];
         view.center = center;
         //[[UIApplication sharedApplication].delegate.window.rootViewController.view addSubview:view];
         //CGPoint center = CGPointMake(100,100);
@@ -80,21 +83,35 @@ CGRect CGRectFromValue(NSValue *value){
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
         // During the gesture, we just add the gesture's translation to the saved original position.
         // The translation will account for the changes in contentOffset caused by auto-scrolling.
+        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:);
+        
+        if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidMoveDragging]){
+            [_delegate dragViewDidMoveDragging:self];
+        }
+        
         CGPoint translation = [recognizer translationInView:self];
         CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
         view.center = center;
+        
+        NSInteger frameIndex = [self goodFrameIndex];
+        if (frameIndex >= 0) {
+            _currentGoodFrameIndex = frameIndex;
+        }
     } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         view.layer.borderWidth = 0.0;
-        
-        //NSInteger frameIndex = [self goodFrameIndex];
-        //if (frameIndex >= 0) {
-            //view.frame = [[_allowFramesArray objectAtIndex:frameIndex] CGRectValue];
-        //}
         
         //CGPoint selfOrigin = [view convertPoint:view.frame.origin toView:rootView];
         if (view.center.x < kLeftViewWidth || view.center.y < (kNavigationHeight+kSubTitleHeight)) {
             [view removeFromSuperview];
         }
+        
+        SEL dragViewDidEndDragging = @selector(dragViewDidEndDragging:);
+        
+        if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidEndDragging]){
+            [_delegate dragViewDidEndDragging:self];
+        }
+        //NSLog(@"good:%d", _currentGoodFrameIndex);
+        view.frame = [[_allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
         

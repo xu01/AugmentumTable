@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATDragView.h"
 
-@interface ATMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface ATMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ATDragViewDelegate>
 
 @end

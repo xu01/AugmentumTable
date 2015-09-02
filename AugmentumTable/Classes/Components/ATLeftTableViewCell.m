@@ -59,7 +59,7 @@
         tableImage.image = [UIImage imageNamed:_tableItems[i][@"image_default"]];
         [dragView addSubview:tableImage];*/
         
-        [itemView addSubview:[self addDragView:i]];
+        [itemView addSubview:[self addDragView:i withDelegate:parent]];
         
         UILabel *tableName = [[UILabel alloc] initWithFrame:CGRectMake(7.5, 110, 110, 25)];
         tableName.text = _tableItems[i][@"name"];
@@ -71,7 +71,7 @@
     }
 }
 
-- (UIView *)addDragView:(int)i {
+- (UIView *)addDragView:(int)i withDelegate:(id)delegate {
     NSMutableArray *aFrames = [NSMutableArray array];
     for (int row=0; row<(kGridRows-([_tableItems[i][@"rows"] intValue]-1)); row++) {
         for (int col=0; col<(kGridColumns-([_tableItems[i][@"cols"] intValue]-1)); col++) {
@@ -83,7 +83,7 @@
     
     CGRect frame = CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth);
     
-    ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withAllowFrames:aFrames withDelegate:nil];
+    ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withAllowFrames:aFrames withDelegate:delegate];
     dragView.tag = i+1000;
     /*UIView *dragView = [[UIView alloc] initWithFrame:CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
     dragView.tag = i+1000;
@@ -97,37 +97,5 @@
     
     return dragView;
 }
-
-- (void)dragRecognized:(BFDragGestureRecognizer *)recognizer {
-    UIView *view = recognizer.view;
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        // When the gesture starts, remember the current position.
-        if ([view.superview.superview isKindOfClass:[ATLeftTableViewCell class]]) {
-            [view.superview insertSubview:[self addDragView:(view.tag-1000)] belowSubview:view];
-        }
-        
-        [[UIApplication sharedApplication].delegate.window.rootViewController.view addSubview:view];
-        CGPoint translation = [recognizer translationInView:[UIApplication sharedApplication].delegate.window.rootViewController.view];
-        //CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
-        CGPoint center = recognizer.frame.origin;
-        NSLog(@"x:%f-y:%f",translation.x, translation.y);
-        view.center = center;
-        
-        view.layer.borderColor = [[UIColor redColor] CGColor];
-        view.layer.borderWidth = 1.0;
-        _startCenter = view.center;
-    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        // During the gesture, we just add the gesture's translation to the saved original position.
-        // The translation will account for the changes in contentOffset caused by auto-scrolling.
-        CGPoint translation = [recognizer translationInView:self];
-        CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
-        view.center = center;
-    } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
-        view.layer.borderWidth = 0.0;
-    } else if (recognizer.state == UIGestureRecognizerStateFailed) {
-        
-    }
-}
-
 
 @end
