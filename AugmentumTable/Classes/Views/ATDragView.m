@@ -20,6 +20,8 @@ CGRect CGRectFromValue(NSValue *value){
 {
     CGPoint         _startCenter;
     NSInteger       _currentGoodFrameIndex;
+    
+    BOOL            _isFirstMove;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -65,42 +67,40 @@ CGRect CGRectFromValue(NSValue *value){
             [view.superview insertSubview:[_cell addDragView:(view.tag-1000) withDelegate:_delegate] belowSubview:view];
         }
         
-        [root.view addSubview:view];
-        CGPoint center = [recognizer locationInView:root.view];
-        view.center = center;
-        //[[UIApplication sharedApplication].delegate.window.rootViewController.view addSubview:view];
-        //CGPoint center = CGPointMake(100,100);
-        //view.center = center;
-        
-        //CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
-        //CGPoint center = recognizer.frame.origin;
-        //NSLog(@"x:%f-y:%f",translation.x, translation.y);
-        //view.center = center;
+        _isFirstMove = NO;
+        if ([view isDescendantOfView:_cell]) {
+            CGRect rc = [root.view convertRect:view.frame fromView:view.superview];
+            [root.view addSubview:view];
+            view.frame = rc;
+            _isFirstMove = YES;
+        }
         
         view.layer.borderColor = [[UIColor redColor] CGColor];
         view.layer.borderWidth = 1.0;
         _startCenter = view.center;
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        // During the gesture, we just add the gesture's translation to the saved original position.
-        // The translation will account for the changes in contentOffset caused by auto-scrolling.
-        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:);
+        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:withRecognizer:);
         
         if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidMoveDragging]){
             [_delegate dragViewDidMoveDragging:self];
         }
         
-        CGPoint translation = [recognizer translationInView:self];
+        CGPoint translation = [recognizer translationInView:self.superview.superview];
         CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
         view.center = center;
-        
-        NSInteger frameIndex = [self goodFrameIndex];
+        NSLog(@"x:%f , y:%f", self.frame.origin.x, self.frame.origin.y);
+        NSInteger frameIndex;
+        if (_isFirstMove) {
+            frameIndex = [self goodFrameIndexNeedTrans:YES];
+        } else {
+            frameIndex = [self goodFrameIndexNeedTrans:NO];
+        }
         if (frameIndex >= 0) {
             _currentGoodFrameIndex = frameIndex;
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         view.layer.borderWidth = 0.0;
         
-        //CGPoint selfOrigin = [view convertPoint:view.frame.origin toView:rootView];
         if (view.center.x < kLeftViewWidth || view.center.y < (kNavigationHeight+kSubTitleHeight)) {
             [view removeFromSuperview];
         }
@@ -110,7 +110,6 @@ CGRect CGRectFromValue(NSValue *value){
         if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidEndDragging]){
             [_delegate dragViewDidEndDragging:self];
         }
-        //NSLog(@"good:%d", _currentGoodFrameIndex);
         view.frame = [[_allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
@@ -118,36 +117,41 @@ CGRect CGRectFromValue(NSValue *value){
     }
 }
 
-- (NSInteger)goodFrameIndex {
-    
+- (NSInteger)goodFrameIndexNeedTrans:(BOOL)trans {
     NSInteger index = -1;
-    //CGPoint touchInSuperview = [self convertPoint:point toView:[self superview]];
-    CGPoint center = self.center;
-    
+    CGPoint center;
+    CGPoint origin;
+    if (trans) {
+        center = CGPointMake(self.center.x-kLeftViewWidth, self.center.y-kNavigationHeight-kSubTitleHeight);
+        origin = CGPointMake(self.frame.origin.x-kLeftViewWidth, self.frame.origin.y-kNavigationHeight-kSubTitleHeight);
+    } else {
+        center = self.center;
+        origin = self.frame.origin;
+    }
     for (int i=0; i<[_allowFramesArray count]; i++) {
         CGRect goodFrame = [[_allowFramesArray objectAtIndex:i] CGRectValue];
         if (CGRectContainsPoint(goodFrame, center)) {
             //左上自动对齐
-            if ((self.frame.origin.x-goodFrame.origin.x) <= (kGridWidth/2) && 0 <= (self.frame.origin.x-goodFrame.origin.x)
-                && (self.frame.origin.y-goodFrame.origin.y) <= (kGridWidth/2) && 0 <= (self.frame.origin.y-goodFrame.origin.y)) {
+            if ((origin.x-goodFrame.origin.x) <= (kGridWidth/2) && 0 <= (origin.x-goodFrame.origin.x)
+                && (origin.y-goodFrame.origin.y) <= (kGridWidth/2) && 0 <= (origin.y-goodFrame.origin.y)) {
                 index = i;
                 break;
             }
             //右上自动对齐
-            else if ((goodFrame.origin.x-self.frame.origin.x) <= (kGridWidth/2) && 0 <= (goodFrame.origin.x-self.frame.origin.x)
-                     && (self.frame.origin.y-goodFrame.origin.y) <= (kGridWidth/2) && 0 <= (self.frame.origin.y-goodFrame.origin.y)) {
+            else if ((goodFrame.origin.x-origin.x) <= (kGridWidth/2) && 0 <= (goodFrame.origin.x-origin.x)
+                     && (origin.y-goodFrame.origin.y) <= (kGridWidth/2) && 0 <= (origin.y-goodFrame.origin.y)) {
                 index = i;
                 break;
             }
             //左下自动对齐
-            else if ((self.frame.origin.x-goodFrame.origin.x) <= (kGridWidth/2) && 0 <= (self.frame.origin.x-goodFrame.origin.x)
+            else if ((origin.x-goodFrame.origin.x) <= (kGridWidth/2) && 0 <= (origin.x-goodFrame.origin.x)
                      && (goodFrame.origin.y-self.frame.origin.y) <= (kGridWidth/2) && 0 <= (goodFrame.origin.y-self.frame.origin.y)) {
                 index = i;
                 break;
             }
             //右下自动对齐
-            else if ((goodFrame.origin.x-self.frame.origin.x) <= (kGridWidth/2) && 0 <= (goodFrame.origin.x-self.frame.origin.x)
-                     && (goodFrame.origin.y-self.frame.origin.y) <= (kGridWidth/2) && 0 <= (goodFrame.origin.y-self.frame.origin.y)) {
+            else if ((goodFrame.origin.x-origin.x) <= (kGridWidth/2) && 0 <= (goodFrame.origin.x-origin.x)
+                     && (goodFrame.origin.y-origin.y) <= (kGridWidth/2) && 0 <= (goodFrame.origin.y-origin.y)) {
                 index = i;
                 break;
             }

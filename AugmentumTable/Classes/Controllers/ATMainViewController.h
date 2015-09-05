@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ATDragView.h"
+#import "ATGridView.h"
 
 @interface ATMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ATDragViewDelegate>
+
+@property (strong, nonatomic) ATGridView *rightCanvas;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "ATMainViewController.h"
 #import "ATLeftTableViewCell.h"
-#import "ATGridView.h"
 
 @interface ATMainViewController ()
 {
@@ -21,7 +20,7 @@
     UIView          *_rightView;
     UILabel         *_rightTitle;
     UIScrollView    *_rightScrollView;
-    ATGridView      *_rightCanvas;
+    //ATGridView      *_rightCanvas;
 }
 
 @end
@@ -136,16 +135,15 @@
 }
 
 - (void)dragViewDidMoveDragging:(ATDragView *)dragView {
-    
+    if (![dragView isDescendantOfView:_rightCanvas]) {
+        [_rightCanvas addSubview:dragView];
+    }
 }
 
 - (void)dragViewDidEndDragging:(ATDragView *)dragView {
-    [_rightCanvas addSubview:dragView];
-    CGPoint center = CGPointMake(dragView.center.x-kLeftViewWidth, dragView.center.y-kNavigationHeight-kSubTitleHeight);
-    
-    //CGPoint origin = [self.view convertPoint:dragView.frame.origin toView:_rightCanvas];
-    //NSLog(@"x:%f - y:%f", center.x, center.y);
-    dragView.center = center;
+    if (![dragView isDescendantOfView:_rightCanvas]) {
+        [_rightCanvas addSubview:dragView];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
