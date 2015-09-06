@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		331BB54E11763B3AB7C1B915 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A7302D45C732365E6E78903 /* libPods.a */; };
+		C7772F0A1B9BE20C00ADF4F6 /* ATGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = C7772F091B9BE20C00ADF4F6 /* ATGlobal.m */; };
 		C7A673171B917BD5008D03FD /* ATGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A673161B917BD5008D03FD /* ATGridView.m */; };
 		C7A6731A1B918BFC008D03FD /* ATDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A673191B918BFC008D03FD /* ATDragView.m */; };
 		CE6FE1601B8E8BD900111F41 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6FE15F1B8E8BD900111F41 /* Images.xcassets */; };
@@ -34,6 +35,8 @@
 		230AE8B2BFA040710CC820C0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5A7302D45C732365E6E78903 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		73083E209AD3BCC8583AAEEA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C7772F081B9BE20C00ADF4F6 /* ATGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATGlobal.h; sourceTree = "<group>"; };
+		C7772F091B9BE20C00ADF4F6 /* ATGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATGlobal.m; sourceTree = "<group>"; };
 		C7A673151B917BD5008D03FD /* ATGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATGridView.h; sourceTree = "<group>"; };
 		C7A673161B917BD5008D03FD /* ATGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATGridView.m; sourceTree = "<group>"; };
 		C7A673181B918BFC008D03FD /* ATDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATDragView.h; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				CE6FE1871B8E98AF00111F41 /* ATFoundation.h */,
+				C7772F081B9BE20C00ADF4F6 /* ATGlobal.h */,
+				C7772F091B9BE20C00ADF4F6 /* ATGlobal.m */,
 			);
 			path = Globals;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				CE6FE1811B8E917500111F41 /* main.m in Sources */,
 				C7A673171B917BD5008D03FD /* ATGridView.m in Sources */,
 				CE6FE18F1B8EF36700111F41 /* ATLeftTableViewCell.m in Sources */,
+				C7772F0A1B9BE20C00ADF4F6 /* ATGlobal.m in Sources */,
 				CE6FE18B1B8E9C2A00111F41 /* UIColor+Hex.m in Sources */,
 				C7A6731A1B918BFC008D03FD /* ATDragView.m in Sources */,
 				CE6FE1841B8E919C00111F41 /* ATMainViewController.m in Sources */,

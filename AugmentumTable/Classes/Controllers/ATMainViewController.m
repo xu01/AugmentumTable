@@ -20,7 +20,13 @@
     UIView          *_rightView;
     UILabel         *_rightTitle;
     UIScrollView    *_rightScrollView;
-    //ATGridView      *_rightCanvas;
+    ATGridView      *_rightCanvas;
+    
+    UIView          *_leftEditView;
+    
+    ATDragView      *_editDragView;
+    
+    BOOL            _isEdit;
 }
 
 @end
@@ -79,6 +85,69 @@
     _leftTableView.bounces = NO;
     [_leftView addSubview:_leftTableView];
     
+    _leftEditView = [[UIView alloc] initWithFrame:CGRectMake(0.0, kSubTitleHeight, kLeftViewWidth, _leftView.frame.size.height-kSubTitleHeight)];
+    _leftEditView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *editView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, kLeftViewWidth, 40.0)];
+    editView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *alineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
+    alineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
+    [editView addSubview:alineView];
+    
+    [_leftEditView addSubview:editView];
+    
+    UIView *nameView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 40.0, kLeftViewWidth, 40.0)];
+    nameView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *blineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
+    blineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
+    [nameView addSubview:blineView];
+    [_leftEditView addSubview:nameView];
+    
+    UIView *rotateView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 80.0, kLeftViewWidth, 160.0)];
+    rotateView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *clineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
+    clineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
+    [rotateView addSubview:clineView];
+    
+    UIButton *btnTurnLeft = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnTurnLeft.frame = CGRectMake(60.0, 50.0, 60.0, 60.0);
+    [btnTurnLeft setImage:[UIImage imageNamed:@"turnleft"] forState:UIControlStateNormal];
+    [btnTurnLeft addTarget:self action:@selector(turnleftDragView:) forControlEvents:UIControlEventTouchUpInside];
+    [rotateView addSubview:btnTurnLeft];
+    
+    UIButton *btnTurnRight = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnTurnRight.frame = CGRectMake(160.0, 50.0, 60.0, 60.0);
+    [btnTurnRight setImage:[UIImage imageNamed:@"turnright"] forState:UIControlStateNormal];
+    [btnTurnRight addTarget:self action:@selector(turnrightDragView:) forControlEvents:UIControlEventTouchUpInside];
+    [rotateView addSubview:btnTurnRight];
+    
+    [_leftEditView addSubview:rotateView];
+    
+    UIView *deleteView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 240.0, kLeftViewWidth, 80.0)];
+    deleteView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *dlineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
+    dlineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
+    [deleteView addSubview:dlineView];
+    
+    UIButton *btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnDelete.backgroundColor = [UIColor colorWithHexString:@"#FB4C52"];
+    btnDelete.layer.cornerRadius = 4.0;
+    btnDelete.frame = CGRectMake((kLeftViewWidth-150.0)/2, 20, 150.0, 40.0);
+    [btnDelete setTitle:@"删除物品" forState:UIControlStateNormal];
+    btnDelete.titleLabel.textColor = [UIColor whiteColor];
+    [btnDelete addTarget:self action:@selector(removeTable:) forControlEvents:UIControlEventTouchUpInside];
+    [deleteView addSubview:btnDelete];
+    
+    [_leftEditView addSubview:deleteView];
+    
+    [_leftView addSubview:_leftEditView];
+    
+    [_leftView bringSubviewToFront:_leftTableView];
+    
     /* Right */
     _rightView = [[UIView alloc] initWithFrame:CGRectMake(kLeftViewWidth, kNavigationHeight, kRightViewWidth, self.view.frame.size.height-kNavigationHeight)];
     _rightView.backgroundColor = [UIColor whiteColor];
@@ -105,6 +174,27 @@
     [_rightScrollView addSubview:_rightCanvas];
 }
 
+- (void)turnleftDragView:(UIButton *)sender {
+    if (_editDragView) {
+        CGAffineTransform at = CGAffineTransformMakeRotation(M_PI/2);
+        //_editDragView.layer.anchorPoint = CGPointMake(0.0, 0.0);
+        [_editDragView setTransform:at];
+    }
+}
+
+- (void)turnrightDragView:(UIButton *)sender {
+    
+}
+
+- (void)removeTable:(UIButton *)sender {
+    if (_editDragView) {
+        [_editDragView removeFromSuperview];
+        [_leftView bringSubviewToFront:_leftTableView];
+        _leftTitle.text = @"放置桌椅";
+        _editDragView = nil;
+        _isEdit = NO;
+    }
+}
 
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -144,11 +234,36 @@
     if (![dragView isDescendantOfView:_rightCanvas]) {
         [_rightCanvas addSubview:dragView];
     }
+    dragView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dragViewSingleTap:)];
+    [dragView addGestureRecognizer:singleTap];
+}
+
+- (void)dragViewSingleTap:(UITapGestureRecognizer *)sender
+{
+    if (_isEdit) {
+        [_leftView bringSubviewToFront:_leftTableView];
+        _leftTitle.text = @"放置桌椅";
+        _editDragView = nil;
+        sender.view.layer.borderWidth = 0.0;
+        _isEdit = NO;
+    } else {
+        [_leftView bringSubviewToFront:_leftEditView];
+        _leftTitle.text = @"编辑物品";
+        _editDragView = (ATDragView *)sender.view;
+        sender.view.layer.borderWidth = 1.0;
+        sender.view.layer.borderColor = [[UIColor blueColor] CGColor];
+        _isEdit = YES;
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return _rightCanvas;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [ATGlobal shareGlobal].scrollViewOffset = scrollView.contentOffset;
 }
 
 @end

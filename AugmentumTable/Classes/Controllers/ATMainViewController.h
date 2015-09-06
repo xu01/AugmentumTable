@@ -12,6 +12,4 @@
 
 @interface ATMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ATDragViewDelegate>
 
-@property (strong, nonatomic) ATGridView *rightCanvas;
-
 @end

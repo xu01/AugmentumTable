@@ -100,7 +100,7 @@ CGRect CGRectFromValue(NSValue *value){
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         view.layer.borderWidth = 0.0;
-        
+        self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
         if (view.center.x < kLeftViewWidth || view.center.y < (kNavigationHeight+kSubTitleHeight)) {
             [view removeFromSuperview];
         }
@@ -121,9 +121,10 @@ CGRect CGRectFromValue(NSValue *value){
     NSInteger index = -1;
     CGPoint center;
     CGPoint origin;
+    CGPoint offset = [ATGlobal shareGlobal].scrollViewOffset;
     if (trans) {
-        center = CGPointMake(self.center.x-kLeftViewWidth, self.center.y-kNavigationHeight-kSubTitleHeight);
-        origin = CGPointMake(self.frame.origin.x-kLeftViewWidth, self.frame.origin.y-kNavigationHeight-kSubTitleHeight);
+        center = CGPointMake(self.center.x-kLeftViewWidth+offset.x, self.center.y-kNavigationHeight-kSubTitleHeight+offset.y);
+        origin = CGPointMake(self.frame.origin.x-kLeftViewWidth+offset.x, self.frame.origin.y-kNavigationHeight-kSubTitleHeight+offset.y);
     } else {
         center = self.center;
         origin = self.frame.origin;
