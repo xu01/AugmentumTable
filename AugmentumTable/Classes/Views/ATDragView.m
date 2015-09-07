@@ -83,6 +83,7 @@ CGRect CGRectFromValue(NSValue *value){
             view.frame = rc;
             _isFirstMove = YES;
         }
+        [self.superview bringSubviewToFront:self];
         
         view.layer.borderColor = [[UIColor redColor] CGColor];
         view.layer.borderWidth = 1.0;
@@ -134,6 +135,7 @@ CGRect CGRectFromValue(NSValue *value){
             }
             
             [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
+            
         }
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
@@ -208,7 +210,7 @@ CGRect CGRectFromValue(NSValue *value){
     if (self.frame.size.width > self.frame.size.height) {
         self.center = CGPointMake(originCenter.x-self.frame.size.height/2-self.frame.size.width/2, originCenter.y-self.frame.size.height/2);
     } else if (self.frame.size.width < self.frame.size.height) {
-        self.center = CGPointMake(originCenter.x-self.frame.size.height/2-self.frame.size.width/2, originCenter.y-self.frame.size.height);
+        self.center = CGPointMake(originCenter.x+self.frame.size.height/2+self.frame.size.width/2, originCenter.y+self.frame.size.height);
     } else {
         self.center = originCenter;
     }
