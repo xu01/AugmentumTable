@@ -205,6 +205,7 @@ CGRect CGRectFromValue(NSValue *value){
     CGAffineTransform transform = self.transform;
     transform = CGAffineTransformMakeRotation(M_PI/2);
     //self.layer.anchorPoint = CGPointMake(0.0, self.frame.size.height);
+    //self.transform = CGAffineTransformIdentity;
     self.transform = transform;
     
     if (self.frame.size.width > self.frame.size.height) {
@@ -234,6 +235,10 @@ CGRect CGRectFromValue(NSValue *value){
     }
     
     [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
+}
+
+- (void)rotateRight {
+    self.transform = CGAffineTransformIdentity;
 }
 
 @end

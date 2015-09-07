@@ -38,6 +38,7 @@ CGRect CGRectFromValue(NSValue *value);
                  withDelegate:(id<ATDragViewDelegate>)delegate;
 
 - (void)rotateLeft;
+- (void)rotateRight;
 
 @end
 

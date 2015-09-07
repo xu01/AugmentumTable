@@ -182,7 +182,9 @@
 }
 
 - (void)turnrightDragView:(UIButton *)sender {
-    
+    if (_editDragView) {
+        [_editDragView rotateRight];
+    }
 }
 
 - (void)removeTable:(UIButton *)sender {
