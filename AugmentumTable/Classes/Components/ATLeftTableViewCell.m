@@ -49,16 +49,6 @@
             itemView.frame = CGRectMake(kLeftViewWidth/2, 40.0+135*(i/2), 145, 135);
         }
         
-        /*UIView *dragView = [[UIView alloc] initWithFrame:CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
-        [itemView addSubview:dragView];
-        BFDragGestureRecognizer *dragRecognizer = [[BFDragGestureRecognizer alloc] init];
-        [dragRecognizer addTarget:self action:@selector(dragRecognized:)];
-        [dragView addGestureRecognizer:dragRecognizer];
-        UIImageView *tableImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
-        tableImage.contentMode = UIViewContentModeScaleAspectFit;
-        tableImage.image = [UIImage imageNamed:_tableItems[i][@"image_default"]];
-        [dragView addSubview:tableImage];*/
-        
         [itemView addSubview:[self addDragView:i withDelegate:parent]];
         
         UILabel *tableName = [[UILabel alloc] initWithFrame:CGRectMake(7.5, 110, 110, 25)];
@@ -84,16 +74,10 @@
     CGRect frame = CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth);
     
     ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withAllowFrames:aFrames withDelegate:delegate];
-    dragView.tag = i+1000;
-    /*UIView *dragView = [[UIView alloc] initWithFrame:CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
-    dragView.tag = i+1000;
-    BFDragGestureRecognizer *dragRecognizer = [[BFDragGestureRecognizer alloc] init];
-    [dragRecognizer addTarget:self action:@selector(dragRecognized:)];
-    [dragView addGestureRecognizer:dragRecognizer];
-    UIImageView *tableImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth)];
-    tableImage.contentMode = UIViewContentModeScaleAspectFit;
-    tableImage.image = [UIImage imageNamed:_tableItems[i][@"image_default"]];
-    [dragView addSubview:tableImage];*/
+    dragView.tableNum = i;
+    dragView.tableId = [[ATGlobal shareGlobal] getTableId];
+    
+    [[ATGlobal shareGlobal] saveTableDataWithId:dragView.tableId withFrame:CGRectValue(CGRectZero)];
     
     return dragView;
 }

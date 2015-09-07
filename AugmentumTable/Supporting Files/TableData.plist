@@ -14,6 +14,8 @@
 				<string>table_def_1_1</string>
 				<key>image_done</key>
 				<string>table_done_1_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_1_1</string>
 				<key>rows</key>
 				<integer>1</integer>
 				<key>cols</key>
@@ -33,6 +35,8 @@
 				<string>table_def_2_1</string>
 				<key>image_done</key>
 				<string>table_done_2_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_2_1</string>
 				<key>rows</key>
 				<integer>1</integer>
 				<key>cols</key>
@@ -45,6 +49,8 @@
 				<string>table_def_2_2</string>
 				<key>image_done</key>
 				<string>table_done_2_2</string>
+				<key>image_wrong</key>
+				<string>table_wrong_2_2</string>
 				<key>rows</key>
 				<integer>1</integer>
 				<key>cols</key>
@@ -64,6 +70,8 @@
 				<string>table_def_4_1</string>
 				<key>image_done</key>
 				<string>table_done_4_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_4_1</string>
 				<key>rows</key>
 				<integer>2</integer>
 				<key>cols</key>
@@ -76,6 +84,8 @@
 				<string>table_def_4_2</string>
 				<key>image_done</key>
 				<string>table_done_4_2</string>
+				<key>image_wrong</key>
+				<string>table_wrong_4_2</string>
 				<key>rows</key>
 				<integer>2</integer>
 				<key>cols</key>
@@ -88,6 +98,8 @@
 				<string>table_def_4_3</string>
 				<key>image_done</key>
 				<string>table_done_4_3</string>
+				<key>image_wrong</key>
+				<string>table_wrong_4_3</string>
 				<key>rows</key>
 				<integer>2</integer>
 				<key>cols</key>
@@ -107,6 +119,8 @@
 				<string>table_def_6_1</string>
 				<key>image_done</key>
 				<string>table_done_6_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_6_1</string>
 				<key>rows</key>
 				<integer>3</integer>
 				<key>cols</key>
@@ -126,6 +140,8 @@
 				<string>table_def_8_1</string>
 				<key>image_done</key>
 				<string>table_done_8_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_8_1</string>
 				<key>rows</key>
 				<integer>4</integer>
 				<key>cols</key>
@@ -138,6 +154,8 @@
 				<string>table_def_8_2</string>
 				<key>image_done</key>
 				<string>table_done_8_2</string>
+				<key>image_wrong</key>
+				<string>table_wrong_8_2</string>
 				<key>rows</key>
 				<integer>3</integer>
 				<key>cols</key>
@@ -157,6 +175,8 @@
 				<string>table_def_10_1</string>
 				<key>image_done</key>
 				<string>table_done_10_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_10_1</string>
 				<key>rows</key>
 				<integer>3</integer>
 				<key>cols</key>
@@ -176,6 +196,8 @@
 				<string>table_def_12_1</string>
 				<key>image_done</key>
 				<string>table_done_12_1</string>
+				<key>image_wrong</key>
+				<string>table_wrong_12_1</string>
 				<key>rows</key>
 				<integer>3</integer>
 				<key>cols</key>

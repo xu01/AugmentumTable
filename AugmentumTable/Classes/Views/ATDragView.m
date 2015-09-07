@@ -32,7 +32,7 @@ CGRect CGRectFromValue(NSValue *value){
     
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-        
+        _currentGoodFrameIndex = -1;
         _tableInfo = [NSDictionary dictionaryWithDictionary:tableInfo];
         _cell = cell;
         _allowFramesArray = [NSArray arrayWithArray:allowFramesArray];
@@ -64,7 +64,7 @@ CGRect CGRectFromValue(NSValue *value){
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         // When the gesture starts, remember the current position.
         if ([view.superview.superview isKindOfClass:[ATLeftTableViewCell class]]) {
-            [view.superview insertSubview:[_cell addDragView:(view.tag-1000) withDelegate:_delegate] belowSubview:view];
+            [view.superview insertSubview:[_cell addDragView:(self.tableNum) withDelegate:_delegate] belowSubview:view];
         }
         
         _isFirstMove = NO;
@@ -79,7 +79,7 @@ CGRect CGRectFromValue(NSValue *value){
         view.layer.borderWidth = 1.0;
         _startCenter = view.center;
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:withRecognizer:);
+        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:);
         
         if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidMoveDragging]){
             [_delegate dragViewDidMoveDragging:self];
@@ -88,10 +88,13 @@ CGRect CGRectFromValue(NSValue *value){
         CGPoint translation = [recognizer translationInView:self.superview.superview];
         CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
         view.center = center;
-        NSLog(@"x:%f , y:%f", self.frame.origin.x, self.frame.origin.y);
         NSInteger frameIndex;
         if (_isFirstMove) {
-            frameIndex = [self goodFrameIndexNeedTrans:YES];
+            if (view.center.x < kLeftViewWidth || view.center.y < (kNavigationHeight+kSubTitleHeight)) {
+                frameIndex = -1;
+            } else {
+                frameIndex = [self goodFrameIndexNeedTrans:YES];
+            }
         } else {
             frameIndex = [self goodFrameIndexNeedTrans:NO];
         }
@@ -100,9 +103,11 @@ CGRect CGRectFromValue(NSValue *value){
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         view.layer.borderWidth = 0.0;
-        self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
-        if (view.center.x < kLeftViewWidth || view.center.y < (kNavigationHeight+kSubTitleHeight)) {
+        
+        if (_isFirstMove && _currentGoodFrameIndex < 0) {
+            [[ATGlobal shareGlobal] removeTableById:self.tableId];
             [view removeFromSuperview];
+            return;
         }
         
         SEL dragViewDidEndDragging = @selector(dragViewDidEndDragging:);
@@ -110,7 +115,17 @@ CGRect CGRectFromValue(NSValue *value){
         if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidEndDragging]){
             [_delegate dragViewDidEndDragging:self];
         }
-        view.frame = [[_allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
+        
+        if (_currentGoodFrameIndex >= 0) {
+            view.frame = [[_allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
+            if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:view.frame]) {
+                self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
+            } else {
+                self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
+            }
+            
+            [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[_allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
+        }
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
         

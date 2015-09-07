@@ -167,6 +167,7 @@
     _rightScrollView.minimumZoomScale = 0.5;
     _rightScrollView.maximumZoomScale = 3.0;
     _rightScrollView.delegate = self;
+    _rightScrollView.tag = 9999;
     _rightScrollView.contentSize = CGSizeMake(kGridRows*kGridWidth, kGridColumns*kGridWidth);
     [_rightView addSubview:_rightScrollView];
     
@@ -188,6 +189,7 @@
 
 - (void)removeTable:(UIButton *)sender {
     if (_editDragView) {
+        [[ATGlobal shareGlobal] removeTableById:_editDragView.tableId];
         [_editDragView removeFromSuperview];
         [_leftView bringSubviewToFront:_leftTableView];
         _leftTitle.text = @"放置桌椅";
@@ -225,9 +227,7 @@
 }
 
 - (void)dragViewDidMoveDragging:(ATDragView *)dragView {
-    if (![dragView isDescendantOfView:_rightCanvas]) {
-        [_rightCanvas addSubview:dragView];
-    }
+    
 }
 
 - (void)dragViewDidEndDragging:(ATDragView *)dragView {
@@ -263,7 +263,9 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [ATGlobal shareGlobal].scrollViewOffset = scrollView.contentOffset;
+    if (scrollView.tag == 9999) {
+        [ATGlobal shareGlobal].scrollViewOffset = scrollView.contentOffset;
+    }
 }
 
 @end

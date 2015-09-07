@@ -474,7 +474,8 @@
 			baseConfigurationReference = 230AE8B2BFA040710CC820C0 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lingyi xu (JGTF3S2CQL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lingyi xu (JGTF3S2CQL)";
 				GCC_PREFIX_HEADER = "AugmentumTable/Supporting Files/AugmentumTable_Prefix.pch";
 				INFOPLIST_FILE = "AugmentumTable/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -489,7 +490,8 @@
 			baseConfigurationReference = 73083E209AD3BCC8583AAEEA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lingyi xu (JGTF3S2CQL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lingyi xu (JGTF3S2CQL)";
 				GCC_PREFIX_HEADER = "AugmentumTable/Supporting Files/AugmentumTable_Prefix.pch";
 				INFOPLIST_FILE = "AugmentumTable/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

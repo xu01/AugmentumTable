@@ -24,6 +24,9 @@ CGRect CGRectFromValue(NSValue *value);
 @property (assign, nonatomic) id<ATDragViewDelegate> delegate;
 @property (strong, nonatomic) NSArray *allowFramesArray;
 
+@property (assign, nonatomic) int tableNum; //桌子数据编号
+@property (assign, nonatomic) int tableId; //编号
+
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo
             withTableViewCell:(ATLeftTableViewCell *)cell
