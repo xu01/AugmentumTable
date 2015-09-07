@@ -22,16 +22,22 @@ CGRect CGRectFromValue(NSValue *value);
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) ATLeftTableViewCell *cell;
 @property (assign, nonatomic) id<ATDragViewDelegate> delegate;
-@property (strong, nonatomic) NSArray *allowFramesArray;
+@property (strong, nonatomic) NSArray *allowVerticalFramesArray;
+@property (strong, nonatomic) NSArray *allowHorizontalFramesArray;
 
 @property (assign, nonatomic) int tableNum; //桌子数据编号
 @property (assign, nonatomic) int tableId; //编号
 
+@property (assign, nonatomic) BOOL isVertical; //当前是否是竖着的
+
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo
             withTableViewCell:(ATLeftTableViewCell *)cell
-              withAllowFrames:(NSArray *)allowFramesArray
+      withVerticalAllowFrames:(NSArray *)allowVerticalFramesArray
+    withHorizontalFramesArray:(NSArray *)allowHorizontalFramesArray
                  withDelegate:(id<ATDragViewDelegate>)delegate;
+
+- (void)rotateLeft;
 
 @end
 

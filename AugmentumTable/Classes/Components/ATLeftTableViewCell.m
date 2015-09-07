@@ -62,18 +62,27 @@
 }
 
 - (UIView *)addDragView:(int)i withDelegate:(id)delegate {
-    NSMutableArray *aFrames = [NSMutableArray array];
+    NSMutableArray *vFrames = [NSMutableArray array];
     for (int row=0; row<(kGridRows-([_tableItems[i][@"rows"] intValue]-1)); row++) {
         for (int col=0; col<(kGridColumns-([_tableItems[i][@"cols"] intValue]-1)); col++) {
             CGRect bFrame = CGRectMake(row*kGridWidth, col*kGridWidth, kGridWidth*[_tableItems[i][@"cols"] intValue], kGridWidth*[_tableItems[i][@"rows"] intValue]);
             
-            [aFrames addObject:CGRectValue(bFrame)];
+            [vFrames addObject:CGRectValue(bFrame)];
+        }
+    }
+    
+    NSMutableArray *hFrames = [NSMutableArray array];
+    for (int row=0; row<(kGridRows-([_tableItems[i][@"cols"] intValue]-1)); row++) {
+        for (int col=0; col<(kGridColumns-([_tableItems[i][@"rows"] intValue]-1)); col++) {
+            CGRect bFrame = CGRectMake(row*kGridWidth, col*kGridWidth, kGridWidth*[_tableItems[i][@"rows"] intValue], kGridWidth*[_tableItems[i][@"cols"] intValue]);
+            
+            [hFrames addObject:CGRectValue(bFrame)];
         }
     }
     
     CGRect frame = CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth);
     
-    ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withAllowFrames:aFrames withDelegate:delegate];
+    ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withVerticalAllowFrames:vFrames withHorizontalFramesArray:hFrames withDelegate:delegate];
     dragView.tableNum = i;
     dragView.tableId = [[ATGlobal shareGlobal] getTableId];
     

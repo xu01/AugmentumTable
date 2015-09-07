@@ -27,7 +27,8 @@ CGRect CGRectFromValue(NSValue *value){
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo
             withTableViewCell:(ATLeftTableViewCell *)cell
-              withAllowFrames:(NSArray *)allowFramesArray
+      withVerticalAllowFrames:(NSArray *)allowVerticalFramesArray
+    withHorizontalFramesArray:(NSArray *)allowHorizontalFramesArray
                  withDelegate:(id<ATDragViewDelegate>)delegate {
     
     if (self = [super initWithFrame:frame]) {
@@ -35,8 +36,10 @@ CGRect CGRectFromValue(NSValue *value){
         _currentGoodFrameIndex = -1;
         _tableInfo = [NSDictionary dictionaryWithDictionary:tableInfo];
         _cell = cell;
-        _allowFramesArray = [NSArray arrayWithArray:allowFramesArray];
+        _allowVerticalFramesArray = [NSArray arrayWithArray:allowVerticalFramesArray];
+        _allowHorizontalFramesArray = [NSArray arrayWithArray:allowHorizontalFramesArray];
         _delegate = delegate;
+        _isVertical = YES;
         
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         [_imageView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
@@ -61,6 +64,12 @@ CGRect CGRectFromValue(NSValue *value){
 - (void)dragRecognized:(BFDragGestureRecognizer *)recognizer {
     UIView *view = recognizer.view;
     ATMainViewController *root = (ATMainViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    NSArray *allowFramesArray;
+    if (_isVertical) {
+        allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
+    } else {
+        allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
+    }
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         // When the gesture starts, remember the current position.
         if ([view.superview.superview isKindOfClass:[ATLeftTableViewCell class]]) {
@@ -117,14 +126,14 @@ CGRect CGRectFromValue(NSValue *value){
         }
         
         if (_currentGoodFrameIndex >= 0) {
-            view.frame = [[_allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
+            view.frame = [[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
             if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:view.frame]) {
                 self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
             } else {
                 self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
             }
             
-            [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[_allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
+            [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
         }
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
@@ -137,6 +146,12 @@ CGRect CGRectFromValue(NSValue *value){
     CGPoint center;
     CGPoint origin;
     CGPoint offset = [ATGlobal shareGlobal].scrollViewOffset;
+    NSArray *allowFramesArray;
+    if (_isVertical) {
+        allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
+    } else {
+        allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
+    }
     if (trans) {
         center = CGPointMake(self.center.x-kLeftViewWidth+offset.x, self.center.y-kNavigationHeight-kSubTitleHeight+offset.y);
         origin = CGPointMake(self.frame.origin.x-kLeftViewWidth+offset.x, self.frame.origin.y-kNavigationHeight-kSubTitleHeight+offset.y);
@@ -144,8 +159,8 @@ CGRect CGRectFromValue(NSValue *value){
         center = self.center;
         origin = self.frame.origin;
     }
-    for (int i=0; i<[_allowFramesArray count]; i++) {
-        CGRect goodFrame = [[_allowFramesArray objectAtIndex:i] CGRectValue];
+    for (int i=0; i<[allowFramesArray count]; i++) {
+        CGRect goodFrame = [[allowFramesArray objectAtIndex:i] CGRectValue];
         if (CGRectContainsPoint(goodFrame, center)) {
             //左上自动对齐
             if ((origin.x-goodFrame.origin.x) <= (kGridWidth/2) && 0 <= (origin.x-goodFrame.origin.x)
@@ -174,6 +189,49 @@ CGRect CGRectFromValue(NSValue *value){
         }
     }
     return index;
+}
+
+- (void)rotateLeft {
+    CGPoint originCenter = self.center;
+    NSLog(@"x:%f - y:%f", originCenter.x, originCenter.y);
+    if (_isVertical) {
+        _isVertical = NO;
+    } else {
+        _isVertical = YES;
+    }
+    
+    CGAffineTransform transform = self.transform;
+    transform = CGAffineTransformMakeRotation(M_PI/2);
+    //self.layer.anchorPoint = CGPointMake(0.0, self.frame.size.height);
+    self.transform = transform;
+    
+    if (self.frame.size.width > self.frame.size.height) {
+        self.center = CGPointMake(originCenter.x-self.frame.size.height/2-self.frame.size.width/2, originCenter.y-self.frame.size.height/2);
+    } else if (self.frame.size.width < self.frame.size.height) {
+        self.center = CGPointMake(originCenter.x-self.frame.size.height/2-self.frame.size.width/2, originCenter.y-self.frame.size.height);
+    } else {
+        self.center = originCenter;
+    }
+    
+    NSArray *allowFramesArray;
+    if (_isVertical) {
+        allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
+    } else {
+        allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
+    }
+    
+    NSInteger frameIndex = [self goodFrameIndexNeedTrans:NO];
+    if (frameIndex >= 0) {
+        _currentGoodFrameIndex = frameIndex;
+    }
+    self.frame = [[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
+    if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:self.frame]) {
+        self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
+    } else {
+        self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
+    }
+    
+    [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
 }
 
 @end

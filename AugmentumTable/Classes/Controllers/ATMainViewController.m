@@ -177,9 +177,7 @@
 
 - (void)turnleftDragView:(UIButton *)sender {
     if (_editDragView) {
-        CGAffineTransform at = CGAffineTransformMakeRotation(M_PI/2);
-        //_editDragView.layer.anchorPoint = CGPointMake(0.0, 0.0);
-        [_editDragView setTransform:at];
+        [_editDragView rotateLeft];
     }
 }
 
@@ -208,9 +206,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"_LeftTableViewCell";
-    //ATLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    ATLeftTableViewCell *cell = (ATLeftTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *CellIdentifier = [NSString stringWithFormat:@"_LeftTableViewCell_%ld", (long)indexPath.row];
+    ATLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //ATLeftTableViewCell *cell = (ATLeftTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil){
         cell = [[ATLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.tableItems = _tableData[indexPath.row][@"items"];
