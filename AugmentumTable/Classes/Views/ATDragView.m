@@ -40,15 +40,24 @@ CGRect CGRectFromValue(NSValue *value){
         _allowHorizontalFramesArray = [NSArray arrayWithArray:allowHorizontalFramesArray];
         _delegate = delegate;
         _isVertical = YES;
+        _isEdit = NO;
+        _isErrorPosition = NO;
+        
         
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        [_imageView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+        //[_imageView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+        _imageView.contentMode = UIViewContentModeCenter;
         [_imageView setImage:[UIImage imageNamed:_tableInfo[@"image_default"]]];
         BFDragGestureRecognizer *dragRecognizer = [[BFDragGestureRecognizer alloc] init];
         [dragRecognizer addTarget:self action:@selector(dragRecognized:)];
         [self addGestureRecognizer:dragRecognizer];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:_imageView];
+        
+        _labelNum = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
+        _labelNum.textAlignment = NSTextAlignmentCenter;
+        _labelNum.textColor = [UIColor whiteColor];
+        _labelNum.font = [UIFont systemFontOfSize:12.0];
+        [self addSubview:_labelNum];
     }
     return self;
 }
@@ -84,9 +93,7 @@ CGRect CGRectFromValue(NSValue *value){
             _isFirstMove = YES;
         }
         [self.superview bringSubviewToFront:self];
-        
-        view.layer.borderColor = [[UIColor redColor] CGColor];
-        view.layer.borderWidth = 1.0;
+        self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
         _startCenter = view.center;
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
         SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:);
@@ -127,15 +134,25 @@ CGRect CGRectFromValue(NSValue *value){
         }
         
         if (_currentGoodFrameIndex >= 0) {
+            
             view.frame = [[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
             if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:view.frame]) {
                 self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
+                //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
+                _isErrorPosition = YES;
             } else {
                 self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
+                self.backgroundColor = [UIColor clearColor];
+                _isErrorPosition = NO;
             }
             
             [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
             
+            if (_isEdit) {
+                //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_green"]];
+                self.layer.borderWidth = 1.0;
+                self.layer.borderColor = [[UIColor colorWithHexString:@"#79C23B"] CGColor];
+            }
         }
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
@@ -195,7 +212,6 @@ CGRect CGRectFromValue(NSValue *value){
 
 - (void)rotateLeft {
     CGPoint originCenter = self.center;
-    NSLog(@"x:%f - y:%f", originCenter.x, originCenter.y);
     if (_isVertical) {
         _isVertical = NO;
     } else {
@@ -203,18 +219,20 @@ CGRect CGRectFromValue(NSValue *value){
     }
     
     CGAffineTransform transform = self.transform;
-    transform = CGAffineTransformMakeRotation(M_PI/2);
-    //self.layer.anchorPoint = CGPointMake(0.0, self.frame.size.height);
-    //self.transform = CGAffineTransformIdentity;
+    CGAffineTransform labelNumTransform = self.labelNum.transform;
+    transform = CGAffineTransformRotate(transform, M_PI/2);
     self.transform = transform;
-    
-    if (self.frame.size.width > self.frame.size.height) {
+    //取int来比较
+    if ((int)self.frame.size.width > (int)self.frame.size.height) {
         self.center = CGPointMake(originCenter.x-self.frame.size.height/2-self.frame.size.width/2, originCenter.y-self.frame.size.height/2);
-    } else if (self.frame.size.width < self.frame.size.height) {
-        self.center = CGPointMake(originCenter.x+self.frame.size.height/2+self.frame.size.width/2, originCenter.y+self.frame.size.height);
+    } else if ((int)self.frame.size.width < (int)self.frame.size.height) {
+        self.center = CGPointMake(originCenter.x+self.frame.size.height/2+self.frame.size.width/2, originCenter.y+self.frame.size.height/4);
     } else {
         self.center = originCenter;
     }
+    
+    labelNumTransform = CGAffineTransformRotate(labelNumTransform, -M_PI/2);
+    self.labelNum.transform = labelNumTransform;
     
     NSArray *allowFramesArray;
     if (_isVertical) {
@@ -230,15 +248,19 @@ CGRect CGRectFromValue(NSValue *value){
     self.frame = [[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
     if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:self.frame]) {
         self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
+        //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
     } else {
         self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
+        self.backgroundColor = [UIColor clearColor];
     }
     
     [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
+    
+    [self.superview bringSubviewToFront:self];
 }
 
 - (void)rotateRight {
-    self.transform = CGAffineTransformIdentity;
+    [self rotateLeft];
 }
 
 @end

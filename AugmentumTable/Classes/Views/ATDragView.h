@@ -25,10 +25,14 @@ CGRect CGRectFromValue(NSValue *value);
 @property (strong, nonatomic) NSArray *allowVerticalFramesArray;
 @property (strong, nonatomic) NSArray *allowHorizontalFramesArray;
 
+@property (strong, nonatomic) UILabel *labelNum;
+
 @property (assign, nonatomic) int tableNum; //桌子数据编号
 @property (assign, nonatomic) int tableId; //编号
 
 @property (assign, nonatomic) BOOL isVertical; //当前是否是竖着的
+@property (assign, nonatomic) BOOL isEdit;
+@property (assign, nonatomic) BOOL isErrorPosition;
 
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo

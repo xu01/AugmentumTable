@@ -23,6 +23,7 @@
     ATGridView      *_rightCanvas;
     
     UIView          *_leftEditView;
+    UITextField     *_nameTextField;
     
     ATDragView      *_editDragView;
     
@@ -95,10 +96,37 @@
     alineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
     [editView addSubview:alineView];
     
+    UIButton *btnCancel = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+    btnCancel.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [btnCancel setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    [btnCancel addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
+    btnCancel.frame = CGRectMake(10.0, 5.0, 50.0, 30.0);
+    [editView addSubview:btnCancel];
+    
+    UIButton *btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+    btnSave.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [btnSave setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    [btnSave addTarget:self action:@selector(saveTableNum) forControlEvents:UIControlEventTouchUpInside];
+    btnSave.frame = CGRectMake(kLeftViewWidth-60.0, 5.0, 50.0, 30.0);
+    [editView addSubview:btnSave];
+    
     [_leftEditView addSubview:editView];
     
     UIView *nameView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 40.0, kLeftViewWidth, 40.0)];
     nameView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *tableNum = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 5.0, kLeftViewWidth*0.2, 30.0)];
+    tableNum.text = @"名称";
+    tableNum.font = [UIFont systemFontOfSize:14.0];
+    tableNum.textColor = [UIColor colorWithHexString:@"333333"];
+    [nameView addSubview:tableNum];
+    
+    _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(kLeftViewWidth*0.2+20.0, 5.0, kLeftViewWidth*0.5, 30.0)];
+    _nameTextField.layer.borderColor = [[UIColor colorWithHexString:@"#DDDDDD"] CGColor];
+    _nameTextField.layer.borderWidth = 1.0;
+    [nameView addSubview:_nameTextField];
     
     UIView *blineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
     blineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
@@ -111,6 +139,12 @@
     UIView *clineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
     clineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
     [rotateView addSubview:clineView];
+    
+    UILabel *rotateTitle = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 10.0, 80.0, 30.0)];
+    rotateTitle.text = @"编辑方向";
+    rotateTitle.font = [UIFont systemFontOfSize:14.0];
+    rotateTitle.textColor = [UIColor colorWithHexString:@"#333333"];
+    [rotateView addSubview:rotateTitle];
     
     UIButton *btnTurnLeft = [UIButton buttonWithType:UIButtonTypeCustom];
     btnTurnLeft.frame = CGRectMake(60.0, 50.0, 60.0, 60.0);
@@ -198,6 +232,28 @@
     }
 }
 
+- (void)saveTableNum {
+    [_nameTextField resignFirstResponder];
+    _editDragView.labelNum.text = _nameTextField.text;
+}
+
+- (void)cancelEdit {
+    [_nameTextField resignFirstResponder];
+    if (_isEdit) {
+        [_leftView bringSubviewToFront:_leftTableView];
+        _leftTitle.text = @"放置桌椅";
+        if (_editDragView.isErrorPosition) {
+            _editDragView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
+        } else {
+            _editDragView.backgroundColor = [UIColor clearColor];
+        }
+        _editDragView.layer.borderWidth = 0.0;
+        _editDragView.isEdit = NO;
+        _editDragView = nil;
+        _isEdit = NO;
+    }
+}
+
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return (([_tableData[indexPath.row][@"items"] count]+1)/2)*135+40;
@@ -241,18 +297,28 @@
 
 - (void)dragViewSingleTap:(UITapGestureRecognizer *)sender
 {
+    [_nameTextField resignFirstResponder];
     if (_isEdit) {
         [_leftView bringSubviewToFront:_leftTableView];
         _leftTitle.text = @"放置桌椅";
+        if (_editDragView.isErrorPosition) {
+            _editDragView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
+        } else {
+            _editDragView.backgroundColor = [UIColor clearColor];
+        }
+        _editDragView.layer.borderWidth = 0.0;
+        _editDragView.isEdit = NO;
         _editDragView = nil;
-        sender.view.layer.borderWidth = 0.0;
         _isEdit = NO;
     } else {
         [_leftView bringSubviewToFront:_leftEditView];
         _leftTitle.text = @"编辑物品";
         _editDragView = (ATDragView *)sender.view;
-        sender.view.layer.borderWidth = 1.0;
-        sender.view.layer.borderColor = [[UIColor blueColor] CGColor];
+        _editDragView.isEdit = YES;
+        //_editDragView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_green"]];
+        _editDragView.layer.borderWidth = 1.0;
+        _editDragView.layer.borderColor = [[UIColor colorWithHexString:@"#79C23B"] CGColor];
+        _nameTextField.text = _editDragView.labelNum.text;
         _isEdit = YES;
     }
 }
