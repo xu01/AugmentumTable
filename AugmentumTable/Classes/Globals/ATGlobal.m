@@ -15,6 +15,7 @@ static ATGlobal *kGlobalInstance = nil;
 - (instancetype)init {
     if (self = [super init]) {
         _tableData = [[NSMutableDictionary alloc] init];
+        _scrollViewZoomScale = 1.0;
     }
     return self;
 }

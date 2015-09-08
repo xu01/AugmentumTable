@@ -13,7 +13,7 @@
 @interface ATGlobal : NSObject
 
 @property (nonatomic, assign) CGPoint scrollViewOffset;     //scrollview 偏移量
-
+@property (nonatomic, assign) CGFloat scrollViewZoomScale;  //scrollview zoomScale
 @property (nonatomic, strong) NSMutableDictionary *tableData;    //已拖动的table 数据
 
 + (ATGlobal *)shareGlobal;

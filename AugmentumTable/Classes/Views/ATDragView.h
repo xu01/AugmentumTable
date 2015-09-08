@@ -34,6 +34,8 @@ CGRect CGRectFromValue(NSValue *value);
 @property (assign, nonatomic) BOOL isEdit;
 @property (assign, nonatomic) BOOL isErrorPosition;
 
+@property (strong, nonatomic) UIView *suggestView;
+
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo
             withTableViewCell:(ATLeftTableViewCell *)cell

@@ -28,6 +28,8 @@
     ATDragView      *_editDragView;
     
     BOOL            _isEdit;
+    
+    UIView          *_currentSuggestView;
 }
 
 @end
@@ -283,7 +285,9 @@
 }
 
 - (void)dragViewDidMoveDragging:(ATDragView *)dragView {
-    
+    //[_currentSuggestView removeFromSuperview];
+    //_currentSuggestView = dragView.suggestView;
+    //[_rightCanvas addSubview:_currentSuggestView];
 }
 
 - (void)dragViewDidEndDragging:(ATDragView *)dragView {
@@ -324,6 +328,10 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    [ATGlobal shareGlobal].scrollViewZoomScale = scrollView.zoomScale;
+}
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return _rightCanvas;
 }

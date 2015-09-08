@@ -49,6 +49,7 @@ CGRect CGRectFromValue(NSValue *value){
         _imageView.contentMode = UIViewContentModeCenter;
         [_imageView setImage:[UIImage imageNamed:_tableInfo[@"image_default"]]];
         BFDragGestureRecognizer *dragRecognizer = [[BFDragGestureRecognizer alloc] init];
+        dragRecognizer.minimumPressDuration = 0.5;
         [dragRecognizer addTarget:self action:@selector(dragRecognized:)];
         [self addGestureRecognizer:dragRecognizer];
         [self addSubview:_imageView];
@@ -74,6 +75,7 @@ CGRect CGRectFromValue(NSValue *value){
     UIView *view = recognizer.view;
     ATMainViewController *root = (ATMainViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     NSArray *allowFramesArray;
+    CGFloat zoomScale = [ATGlobal shareGlobal].scrollViewZoomScale;
     if (_isVertical) {
         allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
     } else {
@@ -96,14 +98,14 @@ CGRect CGRectFromValue(NSValue *value){
         self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
         _startCenter = view.center;
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
-        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:);
-        
-        if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidMoveDragging]){
-            [_delegate dragViewDidMoveDragging:self];
+        CGPoint translation = [recognizer translationInView:self.superview.superview];
+        CGPoint center;
+        if (_isFirstMove) {
+            center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
+        } else {
+            center = CGPointMake(_startCenter.x + translation.x/zoomScale, _startCenter.y + translation.y/zoomScale);
         }
         
-        CGPoint translation = [recognizer translationInView:self.superview.superview];
-        CGPoint center = CGPointMake(_startCenter.x + translation.x, _startCenter.y + translation.y);
         view.center = center;
         NSInteger frameIndex;
         if (_isFirstMove) {
@@ -117,6 +119,16 @@ CGRect CGRectFromValue(NSValue *value){
         }
         if (frameIndex >= 0) {
             _currentGoodFrameIndex = frameIndex;
+            
+            UIView *suggestView = [[UIView alloc] initWithFrame:[[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue]];
+            suggestView.backgroundColor = [UIColor grayColor];
+            _suggestView = suggestView;
+        }
+        
+        SEL dragViewDidMoveDragging = @selector(dragViewDidMoveDragging:);
+        
+        if(_delegate && [(NSObject *)_delegate respondsToSelector:dragViewDidMoveDragging]){
+            [_delegate dragViewDidMoveDragging:self];
         }
     } else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
         view.layer.borderWidth = 0.0;
@@ -172,8 +184,9 @@ CGRect CGRectFromValue(NSValue *value){
         allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
     }
     if (trans) {
-        center = CGPointMake(self.center.x-kLeftViewWidth+offset.x, self.center.y-kNavigationHeight-kSubTitleHeight+offset.y);
-        origin = CGPointMake(self.frame.origin.x-kLeftViewWidth+offset.x, self.frame.origin.y-kNavigationHeight-kSubTitleHeight+offset.y);
+        CGFloat zoomScale = [ATGlobal shareGlobal].scrollViewZoomScale;
+        center = CGPointMake((self.center.x-kLeftViewWidth+offset.x)/zoomScale, (self.center.y-kNavigationHeight-kSubTitleHeight+offset.y)/zoomScale);
+        origin = CGPointMake((self.frame.origin.x-kLeftViewWidth+offset.x)/zoomScale, (self.frame.origin.y-kNavigationHeight-kSubTitleHeight+offset.y)/zoomScale);
     } else {
         center = self.center;
         origin = self.frame.origin;
