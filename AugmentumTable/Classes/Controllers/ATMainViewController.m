@@ -285,12 +285,14 @@
 }
 
 - (void)dragViewDidMoveDragging:(ATDragView *)dragView {
-    //[_currentSuggestView removeFromSuperview];
-    //_currentSuggestView = dragView.suggestView;
-    //[_rightCanvas addSubview:_currentSuggestView];
+    [_currentSuggestView removeFromSuperview];
+    _currentSuggestView = dragView.suggestView;
+    [_rightCanvas addSubview:_currentSuggestView];
+    [_rightCanvas bringSubviewToFront:dragView];
 }
 
 - (void)dragViewDidEndDragging:(ATDragView *)dragView {
+    [_currentSuggestView removeFromSuperview];
     if (![dragView isDescendantOfView:_rightCanvas]) {
         [_rightCanvas addSubview:dragView];
     }
@@ -305,11 +307,6 @@
     if (_isEdit) {
         [_leftView bringSubviewToFront:_leftTableView];
         _leftTitle.text = @"放置桌椅";
-        if (_editDragView.isErrorPosition) {
-            _editDragView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
-        } else {
-            _editDragView.backgroundColor = [UIColor clearColor];
-        }
         _editDragView.layer.borderWidth = 0.0;
         _editDragView.isEdit = NO;
         _editDragView = nil;

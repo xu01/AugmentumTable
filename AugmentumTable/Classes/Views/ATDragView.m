@@ -45,7 +45,6 @@ CGRect CGRectFromValue(NSValue *value){
         
         
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        //[_imageView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
         _imageView.contentMode = UIViewContentModeCenter;
         [_imageView setImage:[UIImage imageNamed:_tableInfo[@"image_default"]]];
         BFDragGestureRecognizer *dragRecognizer = [[BFDragGestureRecognizer alloc] init];
@@ -120,8 +119,15 @@ CGRect CGRectFromValue(NSValue *value){
         if (frameIndex >= 0) {
             _currentGoodFrameIndex = frameIndex;
             
-            UIView *suggestView = [[UIView alloc] initWithFrame:[[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue]];
-            suggestView.backgroundColor = [UIColor grayColor];
+           
+            UIImage *suggestImage;
+            if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:[[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue]]) {
+                suggestImage = [UIImage imageNamed:@"table_bg_red"];
+            } else {
+                suggestImage = [UIImage imageNamed:@"table_bg_green"];
+            }
+            UIImageView *suggestView = [[UIImageView alloc] initWithFrame:[[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue]];
+            suggestView.image = [suggestImage stretchableImageWithLeftCapWidth:1.0 topCapHeight:1.0];
             _suggestView = suggestView;
         }
         
