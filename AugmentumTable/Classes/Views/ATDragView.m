@@ -9,10 +9,10 @@
 #import "ATDragView.h"
 #import "ATMainViewController.h"
 
-NSValue *CGRectValue(CGRect rect){
+NSValue *CGRectValue(CGRect rect) {
     return [NSValue valueWithCGRect:rect];
 }
-CGRect CGRectFromValue(NSValue *value){
+CGRect CGRectFromValue(NSValue *value) {
     return [value CGRectValue];
 }
 
