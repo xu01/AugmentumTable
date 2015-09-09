@@ -94,7 +94,13 @@ CGRect CGRectFromValue(NSValue *value){
             _isFirstMove = YES;
         }
         [self.superview bringSubviewToFront:self];
-        self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
+        
+        if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:view.frame]) {
+            self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
+        } else {
+            self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
+        }
+        
         _startCenter = view.center;
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self.superview.superview];
@@ -123,8 +129,10 @@ CGRect CGRectFromValue(NSValue *value){
             UIImage *suggestImage;
             if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:[[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue]]) {
                 suggestImage = [UIImage imageNamed:@"table_bg_red"];
+                self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
             } else {
                 suggestImage = [UIImage imageNamed:@"table_bg_green"];
+                self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
             }
             UIImageView *suggestView = [[UIImageView alloc] initWithFrame:[[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue]];
             suggestView.image = [suggestImage stretchableImageWithLeftCapWidth:1.0 topCapHeight:1.0];
