@@ -9,6 +9,7 @@
 #import "ATMainViewController.h"
 #import "ATLeftTableViewCell.h"
 
+
 @interface ATMainViewController ()
 {
     NSArray         *_tableData;
@@ -48,6 +49,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self buildNavigationController];
     [self buildMainView];
 }
@@ -67,8 +69,46 @@
 
 // 构造界面
 - (void)buildMainView {
+    WS(ws);
+    
+    /* 左侧 */
+    _leftView = [[UIView alloc] init];
+    _leftView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_leftView];
+    
+    _leftTitle = [[UILabel alloc] init];
+    _leftTitle.backgroundColor = [UIColor whiteColor];
+    _leftTitle.text = @"放置桌椅";
+    _leftTitle.font = [UIFont systemFontOfSize:15.0];
+    _leftTitle.textColor = [UIColor colorWithHexString:@"#FFBA00"];
+    _leftTitle.textAlignment = NSTextAlignmentCenter;
+    [_leftView addSubview:_leftTitle];
+    
+    /* 左侧桌子列表 */
+    _leftTableView = [[UITableView alloc] init];
+    _leftTableView.separatorStyle = UITableViewCellAccessoryNone;
+    _leftTableView.dataSource = self;
+    _leftTableView.delegate = self;
+    _leftTableView.allowsSelection = NO;
+    _leftTableView.bounces = NO;
+    [_leftView addSubview:_leftTableView];
+    
+    /* 左侧编辑桌子 */
+    _leftEditView = [[UIView alloc] init];
+    _leftEditView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_leftEditView];
+    
+    UIView *saveAndCancelView = [[UIView alloc] init];
+    saveAndCancelView.backgroundColor = [UIColor whiteColor];
+    [_leftEditView addSubview:saveAndCancelView];
+    
+    UIView *aLineView = [[UIView alloc] init];
+    aLineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
+    [saveAndCancelView addSubview:aLineView];
+    
+    
     /* Left */
-    _leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, kNavigationHeight, kLeftViewWidth, self.view.frame.size.height-kNavigationHeight)];
+    /*_leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, kNavigationHeight, kLeftViewWidth, self.view.frame.size.height-kNavigationHeight)];
     _leftView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_leftView];
     
@@ -178,9 +218,30 @@
     [btnDelete addTarget:self action:@selector(removeTable:) forControlEvents:UIControlEventTouchUpInside];
     [deleteView addSubview:btnDelete];
     
-    [_leftEditView addSubview:deleteView];
+    [_leftEditView addSubview:deleteView];*/
     
-    [_leftView addSubview:_leftEditView];
+    //[_leftView addSubview:_leftEditView];
+    
+    [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws.view.mas_left).offset(0);
+        make.top.equalTo(ws.view.mas_top).offset(kNavigationHeight);
+        make.width.mas_equalTo(kLeftViewWidth);
+        make.height.equalTo(ws.view.mas_height);
+    }];
+    
+    [_leftTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftView.mas_left).offset(0);
+        make.top.equalTo(_leftView.mas_top).offset(0);
+        make.width.equalTo(_leftView);
+        make.height.mas_equalTo(kSubTitleHeight);
+    }];
+    
+    [_leftTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftView.mas_left).offset(0);
+        make.top.equalTo(_leftTitle.mas_bottom);
+        make.width.equalTo(_leftView);
+        make.bottom.equalTo(ws.view.mas_bottom);
+    }];
     
     [_leftView bringSubviewToFront:_leftTableView];
     

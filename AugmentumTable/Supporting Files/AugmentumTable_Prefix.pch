@@ -11,5 +11,8 @@
 #import "UIColor+Hex.h"
 #import "BFDragGestureRecognizer.h"
 #import "ATGlobal.h"
+#import "Masonry.h"
+
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
 #endif

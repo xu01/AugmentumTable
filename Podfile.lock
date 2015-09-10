@@ -1,10 +1,13 @@
 PODS:
   - BFDragGestureRecognizer (1.1.0)
+  - Masonry (0.6.1)
 
 DEPENDENCIES:
   - BFDragGestureRecognizer
+  - Masonry (~> 0.6.1)
 
 SPEC CHECKSUMS:
   BFDragGestureRecognizer: 12ad65373fe384c4ae61079f65125b8b468babcc
+  Masonry: 4972309f2f134de9dd312f4dc4a21359b50e6caa
 
-COCOAPODS: 0.36.0.rc.1
+COCOAPODS: 0.36.0
