@@ -39,10 +39,9 @@ CGRect CGRectFromValue(NSValue *value) {
         _allowVerticalFramesArray = [NSArray arrayWithArray:allowVerticalFramesArray];
         _allowHorizontalFramesArray = [NSArray arrayWithArray:allowHorizontalFramesArray];
         _delegate = delegate;
-        _isVertical = YES;
-        _isEdit = NO;
-        _isErrorPosition = NO;
-        
+        _isOriginalDirection = YES;
+        _isEditing = NO;
+        _isAtErrorPosition = NO;
         
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.contentMode = UIViewContentModeCenter;
@@ -53,11 +52,11 @@ CGRect CGRectFromValue(NSValue *value) {
         [self addGestureRecognizer:dragRecognizer];
         [self addSubview:_imageView];
         
-        _labelNum = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
-        _labelNum.textAlignment = NSTextAlignmentCenter;
-        _labelNum.textColor = [UIColor whiteColor];
-        _labelNum.font = [UIFont systemFontOfSize:12.0];
-        [self addSubview:_labelNum];
+        _labTableName = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height)];
+        _labTableName.textAlignment = NSTextAlignmentCenter;
+        _labTableName.textColor = [UIColor whiteColor];
+        _labTableName.font = [UIFont systemFontOfSize:12.0];
+        [self addSubview:_labTableName];
     }
     return self;
 }
@@ -75,7 +74,7 @@ CGRect CGRectFromValue(NSValue *value) {
     ATMainViewController *root = (ATMainViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     NSArray *allowFramesArray;
     CGFloat zoomScale = [ATGlobal shareGlobal].scrollViewZoomScale;
-    if (_isVertical) {
+    if (_isOriginalDirection) {
         allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
     } else {
         allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
@@ -83,7 +82,7 @@ CGRect CGRectFromValue(NSValue *value) {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         // When the gesture starts, remember the current position.
         if ([view.superview.superview isKindOfClass:[ATLeftTableViewCell class]]) {
-            [view.superview insertSubview:[_cell addDragView:(self.tableNum) withDelegate:_delegate] belowSubview:view];
+            [view.superview insertSubview:[_cell addDragView:(self.tableDataId) withDelegate:_delegate] belowSubview:view];
         }
         
         _isFirstMove = NO;
@@ -165,16 +164,16 @@ CGRect CGRectFromValue(NSValue *value) {
             if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:view.frame]) {
                 self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
                 //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
-                _isErrorPosition = YES;
+                _isAtErrorPosition = YES;
             } else {
                 self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
                 self.backgroundColor = [UIColor clearColor];
-                _isErrorPosition = NO;
+                _isAtErrorPosition = NO;
             }
             
             [[ATGlobal shareGlobal] saveTableDataWithId:_tableId withFrame:[allowFramesArray objectAtIndex:_currentGoodFrameIndex]];
             
-            if (_isEdit) {
+            if (_isEditing) {
                 //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_green"]];
                 self.layer.borderWidth = 1.0;
                 self.layer.borderColor = [[UIColor colorWithHexString:@"#79C23B"] CGColor];
@@ -191,12 +190,7 @@ CGRect CGRectFromValue(NSValue *value) {
     CGPoint center;
     CGPoint origin;
     CGPoint offset = [ATGlobal shareGlobal].scrollViewOffset;
-    NSArray *allowFramesArray;
-    if (_isVertical) {
-        allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
-    } else {
-        allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
-    }
+    NSArray *allowFramesArray = [self getCurrentAllowFrames];
     if (trans) {
         CGFloat zoomScale = [ATGlobal shareGlobal].scrollViewZoomScale;
         center = CGPointMake((self.center.x-kLeftViewWidth+offset.x)/zoomScale, (self.center.y-kNavigationHeight-kSubTitleHeight+offset.y)/zoomScale);
@@ -237,16 +231,25 @@ CGRect CGRectFromValue(NSValue *value) {
     return index;
 }
 
+- (NSArray *)getCurrentAllowFrames {
+    if (_isOriginalDirection) {
+        return [NSArray arrayWithArray:_allowVerticalFramesArray];
+    } else {
+        return [NSArray arrayWithArray:_allowHorizontalFramesArray];
+    }
+}
+
+/* 需优化 */
 - (void)rotateLeft {
     CGPoint originCenter = self.center;
-    if (_isVertical) {
-        _isVertical = NO;
+    if (_isOriginalDirection) {
+        _isOriginalDirection = NO;
     } else {
-        _isVertical = YES;
+        _isOriginalDirection = YES;
     }
     
     CGAffineTransform transform = self.transform;
-    CGAffineTransform labelNumTransform = self.labelNum.transform;
+    CGAffineTransform labTableNameTransform = _labTableName.transform;
     transform = CGAffineTransformRotate(transform, M_PI/2);
     self.transform = transform;
     //取int来比较
@@ -258,15 +261,10 @@ CGRect CGRectFromValue(NSValue *value) {
         self.center = originCenter;
     }
     
-    labelNumTransform = CGAffineTransformRotate(labelNumTransform, -M_PI/2);
-    self.labelNum.transform = labelNumTransform;
+    labTableNameTransform = CGAffineTransformRotate(labTableNameTransform, -M_PI/2);
+    _labTableName.transform = labTableNameTransform;
     
-    NSArray *allowFramesArray;
-    if (_isVertical) {
-        allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
-    } else {
-        allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
-    }
+    NSArray *allowFramesArray = [self getCurrentAllowFrames];
     
     NSInteger frameIndex = [self goodFrameIndexNeedTrans:NO];
     if (frameIndex >= 0) {
@@ -275,7 +273,6 @@ CGRect CGRectFromValue(NSValue *value) {
     self.frame = [[allowFramesArray objectAtIndex:_currentGoodFrameIndex] CGRectValue];
     if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:self.frame]) {
         self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_wrong"]];
-        //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
     } else {
         self.imageView.image = [UIImage imageNamed:_tableInfo[@"image_done"]];
         self.backgroundColor = [UIColor clearColor];

@@ -94,163 +94,241 @@
     [_leftView addSubview:_leftTableView];
     
     /* 左侧编辑桌子 */
+    /* Line 1 */
     _leftEditView = [[UIView alloc] init];
     _leftEditView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_leftEditView];
+    [_leftView addSubview:_leftEditView];
     
     UIView *saveAndCancelView = [[UIView alloc] init];
-    saveAndCancelView.backgroundColor = [UIColor whiteColor];
     [_leftEditView addSubview:saveAndCancelView];
     
     UIView *aLineView = [[UIView alloc] init];
     aLineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
     [saveAndCancelView addSubview:aLineView];
     
-    
-    /* Left */
-    /*_leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, kNavigationHeight, kLeftViewWidth, self.view.frame.size.height-kNavigationHeight)];
-    _leftView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_leftView];
-    
-    _leftTitle = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, kLeftViewWidth, kSubTitleHeight)];
-    _leftTitle.backgroundColor = [UIColor whiteColor];
-    _leftTitle.text = @"放置桌椅";
-    _leftTitle.font = [UIFont systemFontOfSize:15.0];
-    _leftTitle.textColor = [UIColor colorWithHexString:@"#FFBA00"];
-    _leftTitle.textAlignment = NSTextAlignmentCenter;
-    [_leftView addSubview:_leftTitle];
-    
-    _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, kSubTitleHeight, kLeftViewWidth, _leftView.frame.size.height-kSubTitleHeight) style:UITableViewStylePlain];
-    _leftTableView.separatorStyle = UITableViewCellAccessoryNone;
-    _leftTableView.dataSource = self;
-    _leftTableView.delegate = self;
-    _leftTableView.allowsSelection = NO;
-    _leftTableView.bounces = NO;
-    [_leftView addSubview:_leftTableView];
-    
-    _leftEditView = [[UIView alloc] initWithFrame:CGRectMake(0.0, kSubTitleHeight, kLeftViewWidth, _leftView.frame.size.height-kSubTitleHeight)];
-    _leftEditView.backgroundColor = [UIColor whiteColor];
-    
-    UIView *editView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, kLeftViewWidth, 40.0)];
-    editView.backgroundColor = [UIColor whiteColor];
-    
-    UIView *alineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
-    alineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
-    [editView addSubview:alineView];
-    
     UIButton *btnCancel = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
     btnCancel.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [btnCancel setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     [btnCancel addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
-    btnCancel.frame = CGRectMake(10.0, 5.0, 50.0, 30.0);
-    [editView addSubview:btnCancel];
+    [saveAndCancelView addSubview:btnCancel];
     
     UIButton *btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnSave setTitle:@"保存" forState:UIControlStateNormal];
     btnSave.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [btnSave setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     [btnSave addTarget:self action:@selector(saveTableNum) forControlEvents:UIControlEventTouchUpInside];
-    btnSave.frame = CGRectMake(kLeftViewWidth-60.0, 5.0, 50.0, 30.0);
-    [editView addSubview:btnSave];
+    [saveAndCancelView addSubview:btnSave];
     
-    [_leftEditView addSubview:editView];
+    [_leftEditView addSubview:saveAndCancelView];
     
-    UIView *nameView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 40.0, kLeftViewWidth, 40.0)];
-    nameView.backgroundColor = [UIColor whiteColor];
+    /* Line 2 */
+    UIView *nameView = [[UIView alloc] init];
+    UIView *blineView = [[UIView alloc] init];
+    blineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
+    [nameView addSubview:blineView];
     
-    UILabel *tableNum = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 5.0, kLeftViewWidth*0.2, 30.0)];
-    tableNum.text = @"名称";
-    tableNum.font = [UIFont systemFontOfSize:14.0];
-    tableNum.textColor = [UIColor colorWithHexString:@"333333"];
-    [nameView addSubview:tableNum];
+    UILabel *labName = [[UILabel alloc] init];
+    labName.text = @"名称";
+    labName.font = [UIFont systemFontOfSize:14.0];
+    labName.textColor = [UIColor colorWithHexString:@"333333"];
+    [nameView addSubview:labName];
     
-    _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(kLeftViewWidth*0.2+20.0, 5.0, kLeftViewWidth*0.5, 30.0)];
+    _nameTextField = [[UITextField alloc] init];
     _nameTextField.layer.borderColor = [[UIColor colorWithHexString:@"#DDDDDD"] CGColor];
     _nameTextField.layer.borderWidth = 1.0;
     [nameView addSubview:_nameTextField];
     
-    UIView *blineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
-    blineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
-    [nameView addSubview:blineView];
     [_leftEditView addSubview:nameView];
     
-    UIView *rotateView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 80.0, kLeftViewWidth, 160.0)];
-    rotateView.backgroundColor = [UIColor whiteColor];
-    
-    UIView *clineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
+    /* Line 3 */
+    UIView *rotateView = [[UIView alloc] init];
+    UIView *clineView = [[UIView alloc] init];
     clineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
     [rotateView addSubview:clineView];
     
-    UILabel *rotateTitle = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 10.0, 80.0, 30.0)];
+    UILabel *rotateTitle = [[UILabel alloc] init];
     rotateTitle.text = @"编辑方向";
     rotateTitle.font = [UIFont systemFontOfSize:14.0];
     rotateTitle.textColor = [UIColor colorWithHexString:@"#333333"];
     [rotateView addSubview:rotateTitle];
     
     UIButton *btnTurnLeft = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnTurnLeft.frame = CGRectMake(60.0, 50.0, 60.0, 60.0);
     [btnTurnLeft setImage:[UIImage imageNamed:@"turnleft"] forState:UIControlStateNormal];
     [btnTurnLeft addTarget:self action:@selector(turnleftDragView:) forControlEvents:UIControlEventTouchUpInside];
     [rotateView addSubview:btnTurnLeft];
     
     UIButton *btnTurnRight = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnTurnRight.frame = CGRectMake(160.0, 50.0, 60.0, 60.0);
     [btnTurnRight setImage:[UIImage imageNamed:@"turnright"] forState:UIControlStateNormal];
     [btnTurnRight addTarget:self action:@selector(turnrightDragView:) forControlEvents:UIControlEventTouchUpInside];
     [rotateView addSubview:btnTurnRight];
     
     [_leftEditView addSubview:rotateView];
     
-    UIView *deleteView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 240.0, kLeftViewWidth, 80.0)];
-    deleteView.backgroundColor = [UIColor whiteColor];
-    
-    UIView *dlineView = [[UIView alloc] initWithFrame:CGRectMake(0.0 , 0.0, kLeftViewWidth, kLineHeight)];
+    /* Line 4 */
+    UIView *deleteView = [[UIView alloc] init];
+    UIView *dlineView = [[UIView alloc] init];
     dlineView.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
     [deleteView addSubview:dlineView];
     
     UIButton *btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
     btnDelete.backgroundColor = [UIColor colorWithHexString:@"#FB4C52"];
     btnDelete.layer.cornerRadius = 4.0;
-    btnDelete.frame = CGRectMake((kLeftViewWidth-150.0)/2, 20, 150.0, 40.0);
     [btnDelete setTitle:@"删除物品" forState:UIControlStateNormal];
     btnDelete.titleLabel.textColor = [UIColor whiteColor];
     [btnDelete addTarget:self action:@selector(removeTable:) forControlEvents:UIControlEventTouchUpInside];
     [deleteView addSubview:btnDelete];
     
-    [_leftEditView addSubview:deleteView];*/
+    [_leftEditView addSubview:deleteView];
     
-    //[_leftView addSubview:_leftEditView];
+    [_leftView bringSubviewToFront:_leftTableView];
     
     [_leftView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.view.mas_left).offset(0);
+        make.left.equalTo(ws.view.mas_left);
         make.top.equalTo(ws.view.mas_top).offset(kNavigationHeight);
         make.width.mas_equalTo(kLeftViewWidth);
         make.height.equalTo(ws.view.mas_height);
     }];
     
     [_leftTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_leftView.mas_left).offset(0);
-        make.top.equalTo(_leftView.mas_top).offset(0);
-        make.width.equalTo(_leftView);
+        make.left.equalTo(_leftView.mas_left);
+        make.top.equalTo(_leftView.mas_top);
+        make.width.equalTo(_leftView.mas_width);
         make.height.mas_equalTo(kSubTitleHeight);
     }];
     
     [_leftTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_leftView.mas_left).offset(0);
+        make.left.equalTo(_leftView.mas_left);
         make.top.equalTo(_leftTitle.mas_bottom);
-        make.width.equalTo(_leftView);
+        make.width.equalTo(_leftView.mas_width);
         make.bottom.equalTo(ws.view.mas_bottom);
     }];
     
-    [_leftView bringSubviewToFront:_leftTableView];
+    [_leftEditView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftTableView.mas_left);
+        make.top.equalTo(_leftTableView.mas_top);
+        make.width.equalTo(_leftTableView.mas_width);
+        make.height.equalTo(_leftTableView.mas_height);
+    }];
+    
+    [saveAndCancelView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftEditView.mas_left);
+        make.top.equalTo(_leftEditView.mas_top);
+        make.width.equalTo(_leftEditView.mas_width);
+        make.height.mas_equalTo(@40.0);
+    }];
+    
+    [aLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(saveAndCancelView.mas_left);
+        make.top.equalTo(saveAndCancelView.mas_top);
+        make.width.equalTo(saveAndCancelView.mas_width);
+        make.height.mas_equalTo(@1.0);
+    }];
+    
+    [btnCancel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(saveAndCancelView.mas_left).offset(10.0);
+        make.top.equalTo(saveAndCancelView.mas_top).offset(5.0);
+        make.width.mas_equalTo(@50.0);
+        make.height.mas_equalTo(@30.0);
+    }];
+    
+    [btnSave mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(saveAndCancelView.mas_right).offset(-10.0);
+        make.top.equalTo(saveAndCancelView.mas_top).offset(5.0);
+        make.width.mas_equalTo(@50.0);
+        make.height.mas_equalTo(@30.0);
+    }];
+    
+    [nameView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftEditView.mas_left);
+        make.top.equalTo(_leftEditView.mas_top).offset(40.0);
+        make.width.equalTo(saveAndCancelView.mas_width);
+        make.height.equalTo(saveAndCancelView.mas_height);
+    }];
+    
+    [blineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(nameView.mas_left);
+        make.top.equalTo(nameView.mas_top);
+        make.width.equalTo(nameView.mas_width);
+        make.height.mas_equalTo(@1.0);
+    }];
+    
+    [labName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(nameView.mas_left).offset(20.0);
+        make.top.equalTo(nameView.mas_top).offset(5.0);
+        make.width.mas_equalTo(@50.0);
+        make.height.mas_equalTo(@30.0);
+    }];
+    
+    [_nameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(labName.mas_right).with.offset(10.0);
+        make.top.equalTo(labName.mas_top);
+        make.width.mas_equalTo(@180.0);
+        make.height.mas_equalTo(@30.0);
+    }];
+    
+    [rotateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftEditView.mas_left);
+        make.top.equalTo(_leftEditView.mas_top).offset(80.0);
+        make.width.equalTo(_leftEditView.mas_width);
+        make.height.mas_equalTo(@120.0);
+    }];
+    
+    [clineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(rotateView.mas_left);
+        make.top.equalTo(rotateView.mas_top);
+        make.width.equalTo(rotateView.mas_width);
+        make.height.mas_equalTo(@1.0);
+    }];
+    
+    [rotateTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(rotateView.mas_left).offset(20.0);
+        make.top.equalTo(rotateView.mas_top).offset(5.0);
+        make.width.mas_equalTo(@80.0);
+        make.height.mas_equalTo(@30.0);
+    }];
+    
+    [btnTurnLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(rotateView.mas_left).offset(60.0);
+        make.top.equalTo(rotateTitle.mas_bottom).with.offset(10.0);
+        make.width.mas_equalTo(@60.0);
+        make.height.mas_equalTo(@60.0);
+    }];
+    
+    [btnTurnRight mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(rotateView.mas_right).offset(-60.0);
+        make.top.equalTo(btnTurnLeft.mas_top);
+        make.width.mas_equalTo(@60.0);
+        make.height.mas_equalTo(@60.0);
+    }];
+    
+    [deleteView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftEditView.mas_left);
+        make.top.equalTo(_leftEditView.mas_top).offset(200.0);
+        make.width.equalTo(_leftEditView.mas_width);
+        make.height.mas_equalTo(@80.0);
+    }];
+    
+    [dlineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(deleteView.mas_left);
+        make.top.equalTo(deleteView.mas_top);
+        make.width.equalTo(deleteView.mas_width);
+        make.height.mas_equalTo(1.0);
+    }];
+    
+    [btnDelete mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(deleteView.mas_centerX);
+        make.centerY.equalTo(deleteView.mas_centerY);
+        make.width.mas_equalTo(@150.0);
+        make.height.mas_equalTo(@40.0);
+    }];
     
     /* Right */
-    _rightView = [[UIView alloc] initWithFrame:CGRectMake(kLeftViewWidth, kNavigationHeight, kRightViewWidth, self.view.frame.size.height-kNavigationHeight)];
+    _rightView = [[UIView alloc] init];
     _rightView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_rightView];
     
-    _rightTitle = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, kRightViewWidth, kSubTitleHeight)];
+    _rightTitle = [[UILabel alloc] init];
     _rightTitle.backgroundColor = [UIColor colorWithHexString:@"#555555"];
     _rightTitle.text = @"一楼平面图";
     _rightTitle.font = [UIFont systemFontOfSize:15.0];
@@ -258,18 +336,46 @@
     _rightTitle.textAlignment = NSTextAlignmentCenter;
     [_rightView addSubview:_rightTitle];
     
-    _rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, kSubTitleHeight, kRightViewWidth, _rightView.frame.size.height-kSubTitleHeight)];
+    _rightScrollView = [[UIScrollView alloc] init];
     _rightScrollView.scrollEnabled = YES;
     _rightScrollView.bounces = NO;
     _rightScrollView.minimumZoomScale = 0.5;
     _rightScrollView.maximumZoomScale = 3.0;
     _rightScrollView.delegate = self;
     _rightScrollView.tag = 9999;
-    _rightScrollView.contentSize = CGSizeMake(kGridRows*kGridWidth, kGridColumns*kGridWidth);
     [_rightView addSubview:_rightScrollView];
     
-    _rightCanvas = [[ATGridView alloc] initWithFrame:CGRectMake(0.0, 0.0, kGridRows*kGridWidth, kGridColumns*kGridWidth)];
+    _rightCanvas = [[ATGridView alloc] init];
     [_rightScrollView addSubview:_rightCanvas];
+    
+    [_rightView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftView.mas_right);
+        make.top.equalTo(_leftView.mas_top);
+        make.right.equalTo(ws.view);
+        make.bottom.equalTo(ws.view);
+    }];
+    
+    [_rightTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_rightView.mas_left);
+        make.top.equalTo(_rightView.mas_top);
+        make.width.equalTo(_rightView.mas_width);
+        make.height.mas_equalTo(kSubTitleHeight);
+    }];
+    
+    [_rightScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_leftView.mas_right);
+        make.top.equalTo(_rightTitle.mas_bottom);
+        make.width.equalTo(_rightView.mas_width);
+        make.bottom.equalTo(_rightView.mas_bottom);
+    }];
+    
+    [_rightCanvas mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_rightScrollView.mas_left);
+        make.top.equalTo(_rightScrollView.mas_top);
+        make.edges.equalTo(_rightScrollView);
+        make.width.mas_equalTo(kGridRows*kGridWidth);
+        make.height.mas_equalTo(kGridColumns*kGridWidth);
+    }];
 }
 
 - (void)turnleftDragView:(UIButton *)sender {
@@ -329,11 +435,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *CellIdentifier = [NSString stringWithFormat:@"_LeftTableViewCell_%ld", (long)indexPath.row];
     ATLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    //ATLeftTableViewCell *cell = (ATLeftTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil){
         cell = [[ATLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.tableItems = _tableData[indexPath.row][@"items"];
-        cell.tableType.text = _tableData[indexPath.row][@"name"];
+        cell.labTableType.text = _tableData[indexPath.row][@"name"];
         [cell buildTablesWithParent:self];
     }
 

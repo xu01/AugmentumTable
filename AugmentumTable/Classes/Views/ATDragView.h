@@ -25,16 +25,17 @@ CGRect CGRectFromValue(NSValue *value);
 @property (strong, nonatomic) NSArray *allowVerticalFramesArray;
 @property (strong, nonatomic) NSArray *allowHorizontalFramesArray;
 
-@property (strong, nonatomic) UILabel *labelNum;
+@property (strong, nonatomic) UILabel *labTableName;                //桌子名称
 
-@property (assign, nonatomic) int tableNum; //桌子数据编号
-@property (assign, nonatomic) int tableId; //编号
+@property (assign, nonatomic) int tableDataId;                      //桌子数据编号
+@property (assign, nonatomic) int tableId;                          //桌子编号
 
-@property (assign, nonatomic) BOOL isVertical; //当前是否是竖着的
-@property (assign, nonatomic) BOOL isEdit;
-@property (assign, nonatomic) BOOL isErrorPosition;
+@property (assign, nonatomic) BOOL isOriginalDirection;             //当前是否是竖着的
+@property (assign, nonatomic) BOOL isEditing;                       //是否处于编辑状态
+@property (assign, nonatomic) BOOL isAtErrorPosition;               //是否处于错误的位置
+@property (assign, nonatomic) BOOL isMoving;                        //是否正在移动
 
-@property (strong, nonatomic) UIImageView *suggestView;
+@property (strong, nonatomic) UIImageView *suggestView;             //移动提示框
 
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo

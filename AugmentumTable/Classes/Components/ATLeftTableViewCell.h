@@ -10,7 +10,7 @@
 
 @interface ATLeftTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) UILabel *tableType;
+@property (strong, nonatomic) UILabel *labTableType;
 @property (strong, nonatomic) NSMutableArray *tableItems;
 
 - (void)buildTablesWithParent:(id)parent;

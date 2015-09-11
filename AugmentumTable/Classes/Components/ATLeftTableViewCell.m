@@ -17,23 +17,53 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         /* 桌子分类 */
-        UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, kLeftViewWidth, kLineHeight)];
+        UIView *topLine = [[UIView alloc] init];
         topLine.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
         [self addSubview:topLine];
         
-        UIView *sView = [[UIView alloc] initWithFrame:CGRectMake(10.0, 12.0, 5.0, 16.0)];
-        sView.backgroundColor = [UIColor colorWithHexString:@"#FFBA00"];
-        [self addSubview:sView];
+        UIView *iconView = [[UIView alloc] init];
+        iconView.backgroundColor = [UIColor colorWithHexString:@"#FFBA00"];
+        [self addSubview:iconView];
         
-        _tableType = [[UILabel alloc] initWithFrame:CGRectMake(25.0, 0.0, kLeftViewWidth-50.0, 40.0)];
-        _tableType.textAlignment = NSTextAlignmentLeft;
-        _tableType.font = [UIFont systemFontOfSize:15.0];
-        _tableType.textColor = [UIColor blackColor];
-        [self addSubview:_tableType];
+        _labTableType = [[UILabel alloc] init];
+        _labTableType.textAlignment = NSTextAlignmentLeft;
+        _labTableType.font = [UIFont systemFontOfSize:15.0];
+        _labTableType.textColor = [UIColor blackColor];
+        [self addSubview:_labTableType];
         
-        UIView *centerLine = [[UIView alloc] initWithFrame:CGRectMake(0.0, 40.0, kLeftViewWidth, kLineHeight)];
+        UIView *centerLine = [[UIView alloc] init];
         centerLine.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
         [self addSubview:centerLine];
+        
+        WS(ws);
+        
+        [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(ws.mas_left);
+            make.top.equalTo(ws.mas_top);
+            make.width.equalTo(ws.mas_width);
+            make.height.mas_equalTo(@1.0);
+        }];
+        
+        [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(ws.mas_left).offset(10.0);
+            make.top.equalTo(ws.mas_top).offset(12.0);
+            make.width.mas_equalTo(@5.0);
+            make.height.mas_equalTo(@16.0);
+        }];
+        
+        [_labTableType mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(iconView.mas_right).offset(15.0);
+            make.top.equalTo(ws.mas_top);
+            make.width.mas_equalTo(@150.0);
+            make.height.mas_equalTo(@40.0);
+        }];
+        
+        [centerLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(ws.mas_left);
+            make.top.equalTo(ws.mas_top).offset(40.0);
+            make.width.equalTo(ws.mas_width);
+            make.height.equalTo(@1.0);
+        }];
         
         _tableItems = [NSMutableArray array];
     }
@@ -41,23 +71,36 @@
 }
 
 - (void)buildTablesWithParent:(id)parent {
+    WS(ws);
     for (int i=0; i<_tableItems.count; i++) {
         UIView *itemView = [[UIView alloc] init];
-        if (i%2==0) {
-            itemView.frame = CGRectMake(0.0, 40.0+135*(i/2), kLeftViewWidth/2, 135);
-        } else {
-            itemView.frame = CGRectMake(kLeftViewWidth/2, 40.0+135*(i/2), 145, 135);
-        }
+        [self addSubview:itemView];
         
         [itemView addSubview:[self addDragView:i withDelegate:parent]];
         
-        UILabel *tableName = [[UILabel alloc] initWithFrame:CGRectMake(7.5, 110, 110, 25)];
+        UILabel *tableName = [[UILabel alloc] init];
         tableName.text = _tableItems[i][@"name"];
         tableName.textAlignment = NSTextAlignmentCenter;
         tableName.font = [UIFont systemFontOfSize:15.0];
         [itemView addSubview:tableName];
         
-        [self addSubview:itemView];
+        [itemView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(ws.mas_top).offset(40.0+135.0*(i/2));
+            if (i%2 == 0) {
+                make.left.equalTo(ws.mas_left);
+            } else {
+                make.left.equalTo(ws.mas_centerX);
+            }
+            make.width.equalTo(ws.mas_width).dividedBy(0.5);
+            make.height.mas_equalTo(@135.0);
+        }];
+        
+        [tableName mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(@5.0);
+            make.top.equalTo(itemView.mas_top).offset(110.0);
+            make.width.mas_equalTo(@110.0);
+            make.height.mas_equalTo(@25.0);
+        }];
     }
 }
 
@@ -83,7 +126,7 @@
     CGRect frame = CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth);
     
     ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withVerticalAllowFrames:vFrames withHorizontalFramesArray:hFrames withDelegate:delegate];
-    dragView.tableNum = i;
+    dragView.tableDataId = i;
     dragView.tableId = [[ATGlobal shareGlobal] getTableId];
     
     [[ATGlobal shareGlobal] saveTableDataWithId:dragView.tableId withFrame:CGRectValue(CGRectZero)];
