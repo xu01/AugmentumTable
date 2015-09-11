@@ -403,7 +403,7 @@
 
 - (void)saveTableNum {
     [_nameTextField resignFirstResponder];
-    _editDragView.labelNum.text = _nameTextField.text;
+    _editDragView.labTableName.text = _nameTextField.text;
 }
 
 - (void)cancelEdit {
@@ -411,13 +411,13 @@
     if (_isEdit) {
         [_leftView bringSubviewToFront:_leftTableView];
         _leftTitle.text = @"放置桌椅";
-        if (_editDragView.isErrorPosition) {
+        if (_editDragView.isAtErrorPosition) {
             _editDragView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_red"]];
         } else {
             _editDragView.backgroundColor = [UIColor clearColor];
         }
         _editDragView.layer.borderWidth = 0.0;
-        _editDragView.isEdit = NO;
+        _editDragView.isEditing = NO;
         _editDragView = nil;
         _isEdit = NO;
     }
@@ -436,10 +436,10 @@
     NSString *CellIdentifier = [NSString stringWithFormat:@"_LeftTableViewCell_%ld", (long)indexPath.row];
     ATLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        cell = [[ATLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ATLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier withDragViewDelegate:self];
         cell.tableItems = _tableData[indexPath.row][@"items"];
         cell.labTableType.text = _tableData[indexPath.row][@"name"];
-        [cell buildTablesWithParent:self];
+        [cell buildTablesWithParent];
     }
 
     return cell;
@@ -474,18 +474,18 @@
         [_leftView bringSubviewToFront:_leftTableView];
         _leftTitle.text = @"放置桌椅";
         _editDragView.layer.borderWidth = 0.0;
-        _editDragView.isEdit = NO;
+        _editDragView.isEditing = NO;
         _editDragView = nil;
         _isEdit = NO;
     } else {
         [_leftView bringSubviewToFront:_leftEditView];
         _leftTitle.text = @"编辑物品";
         _editDragView = (ATDragView *)sender.view;
-        _editDragView.isEdit = YES;
+        _editDragView.isEditing = YES;
         //_editDragView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"table_bg_green"]];
         _editDragView.layer.borderWidth = 1.0;
         _editDragView.layer.borderColor = [[UIColor colorWithHexString:@"#79C23B"] CGColor];
-        _nameTextField.text = _editDragView.labelNum.text;
+        _nameTextField.text = _editDragView.labTableName.text;
         _isEdit = YES;
     }
 }

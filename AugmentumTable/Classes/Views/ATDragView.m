@@ -27,8 +27,8 @@ CGRect CGRectFromValue(NSValue *value) {
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo
             withTableViewCell:(ATLeftTableViewCell *)cell
-      withVerticalAllowFrames:(NSArray *)allowVerticalFramesArray
-    withHorizontalFramesArray:(NSArray *)allowHorizontalFramesArray
+withOriginDirectionAllowFrames:(NSArray *)allowOriginalDirectionFramesArray
+withRotateDirectionFramesArray:(NSArray *)allowRotateDirectionFramesArray
                  withDelegate:(id<ATDragViewDelegate>)delegate {
     
     if (self = [super initWithFrame:frame]) {
@@ -36,12 +36,13 @@ CGRect CGRectFromValue(NSValue *value) {
         _currentGoodFrameIndex = -1;
         _tableInfo = [NSDictionary dictionaryWithDictionary:tableInfo];
         _cell = cell;
-        _allowVerticalFramesArray = [NSArray arrayWithArray:allowVerticalFramesArray];
-        _allowHorizontalFramesArray = [NSArray arrayWithArray:allowHorizontalFramesArray];
+        _allowOriginalDirectionFramesArray = [NSArray arrayWithArray:allowOriginalDirectionFramesArray];
+        _allowRotateDirectionFramesArray = [NSArray arrayWithArray:allowRotateDirectionFramesArray];
         _delegate = delegate;
         _isOriginalDirection = YES;
         _isEditing = NO;
         _isAtErrorPosition = NO;
+        _isFirstMove = YES;
         
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.contentMode = UIViewContentModeCenter;
@@ -72,26 +73,17 @@ CGRect CGRectFromValue(NSValue *value) {
 - (void)dragRecognized:(BFDragGestureRecognizer *)recognizer {
     UIView *view = recognizer.view;
     ATMainViewController *root = (ATMainViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
-    NSArray *allowFramesArray;
+    NSArray *allowFramesArray = [self getCurrentAllowFrames];
     CGFloat zoomScale = [ATGlobal shareGlobal].scrollViewZoomScale;
-    if (_isOriginalDirection) {
-        allowFramesArray = [NSArray arrayWithArray:_allowVerticalFramesArray];
-    } else {
-        allowFramesArray = [NSArray arrayWithArray:_allowHorizontalFramesArray];
-    }
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         // When the gesture starts, remember the current position.
-        if ([view.superview.superview isKindOfClass:[ATLeftTableViewCell class]]) {
+        if (_isFirstMove) {
             [view.superview insertSubview:[_cell addDragView:(self.tableDataId) withDelegate:_delegate] belowSubview:view];
-        }
-        
-        _isFirstMove = NO;
-        if ([view isDescendantOfView:_cell]) {
             CGRect rc = [root.view convertRect:view.frame fromView:view.superview];
             [root.view addSubview:view];
             view.frame = rc;
-            _isFirstMove = YES;
         }
+        
         [self.superview bringSubviewToFront:self];
         
         if ([[ATGlobal shareGlobal] checkRectIntersectById:_tableId ByRect:view.frame]) {
@@ -180,6 +172,8 @@ CGRect CGRectFromValue(NSValue *value) {
             }
         }
         
+        _isFirstMove = NO;
+        
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
         
     }
@@ -233,9 +227,9 @@ CGRect CGRectFromValue(NSValue *value) {
 
 - (NSArray *)getCurrentAllowFrames {
     if (_isOriginalDirection) {
-        return [NSArray arrayWithArray:_allowVerticalFramesArray];
+        return [NSArray arrayWithArray:_allowOriginalDirectionFramesArray];
     } else {
-        return [NSArray arrayWithArray:_allowHorizontalFramesArray];
+        return [NSArray arrayWithArray:_allowRotateDirectionFramesArray];
     }
 }
 

@@ -11,11 +11,12 @@
 
 @implementation ATLeftTableViewCell
 {
-    CGPoint _startCenter;
+    id      _dragViewDelegate;
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withDragViewDelegate:(id)drageViewDelegate {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _dragViewDelegate = drageViewDelegate;
         /* 桌子分类 */
         UIView *topLine = [[UIView alloc] init];
         topLine.backgroundColor = [UIColor colorWithHexString:@"#DDDDDD"];
@@ -70,13 +71,13 @@
     return self;
 }
 
-- (void)buildTablesWithParent:(id)parent {
+- (void)buildTablesWithParent {
     WS(ws);
     for (int i=0; i<_tableItems.count; i++) {
         UIView *itemView = [[UIView alloc] init];
         [self addSubview:itemView];
         
-        [itemView addSubview:[self addDragView:i withDelegate:parent]];
+        [itemView addSubview:[self addDragView:i withDelegate:_dragViewDelegate]];
         
         UILabel *tableName = [[UILabel alloc] init];
         tableName.text = _tableItems[i][@"name"];
@@ -105,27 +106,35 @@
 }
 
 - (UIView *)addDragView:(int)i withDelegate:(id)delegate {
-    NSMutableArray *vFrames = [NSMutableArray array];
+    NSMutableArray *originDirectionFrames = [NSMutableArray array];
     for (int row=0; row<(kGridRows-([_tableItems[i][@"rows"] intValue]-1)); row++) {
         for (int col=0; col<(kGridColumns-([_tableItems[i][@"cols"] intValue]-1)); col++) {
-            CGRect bFrame = CGRectMake(row*kGridWidth, col*kGridWidth, kGridWidth*[_tableItems[i][@"cols"] intValue], kGridWidth*[_tableItems[i][@"rows"] intValue]);
+            CGRect odFrame = CGRectMake(row*kGridWidth, col*kGridWidth, kGridWidth*[_tableItems[i][@"cols"] intValue], kGridWidth*[_tableItems[i][@"rows"] intValue]);
             
-            [vFrames addObject:CGRectValue(bFrame)];
+            [originDirectionFrames addObject:CGRectValue(odFrame)];
         }
     }
     
-    NSMutableArray *hFrames = [NSMutableArray array];
+    NSMutableArray *rotateDirectionFrames = [NSMutableArray array];
     for (int row=0; row<(kGridRows-([_tableItems[i][@"cols"] intValue]-1)); row++) {
         for (int col=0; col<(kGridColumns-([_tableItems[i][@"rows"] intValue]-1)); col++) {
-            CGRect bFrame = CGRectMake(row*kGridWidth, col*kGridWidth, kGridWidth*[_tableItems[i][@"rows"] intValue], kGridWidth*[_tableItems[i][@"cols"] intValue]);
+            CGRect rdFrame = CGRectMake(row*kGridWidth, col*kGridWidth, kGridWidth*[_tableItems[i][@"rows"] intValue], kGridWidth*[_tableItems[i][@"cols"] intValue]);
             
-            [hFrames addObject:CGRectValue(bFrame)];
+            [rotateDirectionFrames addObject:CGRectValue(rdFrame)];
         }
     }
     
-    CGRect frame = CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2, (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2, [_tableItems[i][@"cols"] intValue]*kGridWidth, [_tableItems[i][@"rows"] intValue]*kGridWidth);
+    CGRect frame = CGRectMake((110.0-[_tableItems[i][@"cols"] intValue]*kGridWidth)/2,
+                              (110.0-[_tableItems[i][@"rows"] intValue]*kGridWidth)/2,
+                              [_tableItems[i][@"cols"] intValue]*kGridWidth,
+                              [_tableItems[i][@"rows"] intValue]*kGridWidth);
     
-    ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame withTableInfo:_tableItems[i] withTableViewCell:self withVerticalAllowFrames:vFrames withHorizontalFramesArray:hFrames withDelegate:delegate];
+    ATDragView *dragView = [[ATDragView alloc] initWithFrame:frame
+                                               withTableInfo:_tableItems[i]
+                                           withTableViewCell:self
+                              withOriginDirectionAllowFrames:originDirectionFrames
+                              withRotateDirectionFramesArray:rotateDirectionFrames
+                                                withDelegate:delegate];
     dragView.tableDataId = i;
     dragView.tableId = [[ATGlobal shareGlobal] getTableId];
     

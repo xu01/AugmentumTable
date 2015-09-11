@@ -13,7 +13,10 @@
 @property (strong, nonatomic) UILabel *labTableType;
 @property (strong, nonatomic) NSMutableArray *tableItems;
 
-- (void)buildTablesWithParent:(id)parent;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withDragViewDelegate:(id)drageViewDelegate;
+
+- (void)buildTablesWithParent;
+
 - (UIView *)addDragView:(int)i withDelegate:(id)delegate;
 
 @end

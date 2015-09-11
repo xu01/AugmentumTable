@@ -22,8 +22,8 @@ CGRect CGRectFromValue(NSValue *value);
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) ATLeftTableViewCell *cell;
 @property (assign, nonatomic) id<ATDragViewDelegate> delegate;
-@property (strong, nonatomic) NSArray *allowVerticalFramesArray;
-@property (strong, nonatomic) NSArray *allowHorizontalFramesArray;
+@property (strong, nonatomic) NSArray *allowOriginalDirectionFramesArray;
+@property (strong, nonatomic) NSArray *allowRotateDirectionFramesArray;
 
 @property (strong, nonatomic) UILabel *labTableName;                //桌子名称
 
@@ -40,8 +40,8 @@ CGRect CGRectFromValue(NSValue *value);
 - (instancetype)initWithFrame:(CGRect)frame
                 withTableInfo:(NSDictionary *)tableInfo
             withTableViewCell:(ATLeftTableViewCell *)cell
-      withVerticalAllowFrames:(NSArray *)allowVerticalFramesArray
-    withHorizontalFramesArray:(NSArray *)allowHorizontalFramesArray
+withOriginDirectionAllowFrames:(NSArray *)allowOriginalDirectionFramesArray
+withRotateDirectionFramesArray:(NSArray *)allowRotateDirectionFramesArray
                  withDelegate:(id<ATDragViewDelegate>)delegate;
 
 - (void)rotateLeft;
