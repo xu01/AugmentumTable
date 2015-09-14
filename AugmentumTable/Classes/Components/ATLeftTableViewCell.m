@@ -106,6 +106,7 @@
 }
 
 - (UIView *)addDragView:(int)i withDelegate:(id)delegate {
+    /* origin direction frames */
     NSMutableArray *originDirectionFrames = [NSMutableArray array];
     for (int row=0; row<(kGridRows-([_tableItems[i][@"rows"] intValue]-1)); row++) {
         for (int col=0; col<(kGridColumns-([_tableItems[i][@"cols"] intValue]-1)); col++) {
@@ -114,7 +115,7 @@
             [originDirectionFrames addObject:CGRectValue(odFrame)];
         }
     }
-    
+    /* rotate direction frames */
     NSMutableArray *rotateDirectionFrames = [NSMutableArray array];
     for (int row=0; row<(kGridRows-([_tableItems[i][@"cols"] intValue]-1)); row++) {
         for (int col=0; col<(kGridColumns-([_tableItems[i][@"rows"] intValue]-1)); col++) {

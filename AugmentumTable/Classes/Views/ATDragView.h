@@ -44,6 +44,9 @@ withOriginDirectionAllowFrames:(NSArray *)allowOriginalDirectionFramesArray
 withRotateDirectionFramesArray:(NSArray *)allowRotateDirectionFramesArray
                  withDelegate:(id<ATDragViewDelegate>)delegate;
 
+/*
+ *  rotate 优化
+ */
 - (void)rotateLeft;
 - (void)rotateRight;
 

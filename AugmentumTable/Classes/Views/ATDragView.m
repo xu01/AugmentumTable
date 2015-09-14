@@ -173,7 +173,6 @@ withRotateDirectionFramesArray:(NSArray *)allowRotateDirectionFramesArray
         }
         
         _isFirstMove = NO;
-        
     } else if (recognizer.state == UIGestureRecognizerStateFailed) {
         
     }
